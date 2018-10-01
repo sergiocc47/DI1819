@@ -1,6 +1,9 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 
 /*
@@ -14,18 +17,19 @@ import java.util.List;
  */
 public class GestorCorredores {
 
-    List<Corredor> listaCorredores = new ArrayList<Corredor>();
+    Set<Corredor> setCorredores;
+    List<Corredor> listaCorredores = new ArrayList<Corredor>(setCorredores);
 
     public List<Corredor> getListaCorredores() {
         return listaCorredores;
     }
-    
-    public void addCorredor(Corredor c){
+
+    public void addCorredor(Corredor c) {
         listaCorredores.add(c);
     }
-    
-    public void listarCorredores(){
-        for (Corredor c : listaCorredores){
+
+    public void listarCorredores() {
+        for (Corredor c : listaCorredores) {
             System.out.println(c);
         }
     }
@@ -38,8 +42,9 @@ public class GestorCorredores {
             i++;
         }
     }
-    
-     public int buscarCorredor(String dni) {
+
+    // for each no es lo más correcto porque al eliminar un corredor 
+    public int buscarCorredor(String dni) {
         int indice = 0;
         for (Corredor c : listaCorredores) {
             if (c.getDni().equals(dni)) {
@@ -53,9 +58,19 @@ public class GestorCorredores {
     public void eliminarCorredor(int indice) {
         listaCorredores.remove(indice);
     }
+    
+    public void ordernarCorredores()
+    {
+        Collections.sort (listaCorredores,  new Comparator <Corredor>() {
+            @Override
+            public int compare(Corredor c1, Corredor c2) {
+                return c1.getNombre().compareTo(c2.getNombre());
+            }
+        });
+    }
 
     public void eliminarLista() {
         listaCorredores.clear();
     }
-    
+
 }
