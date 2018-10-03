@@ -32,8 +32,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             dlm.addElement(corredor);
         
         jListCorredores.setModel(dlm);
-            
-        
+                   
     }
 
     /**
@@ -105,15 +104,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnhadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirActionPerformed
-        //DialogoAlta equivale a PantallaSecundaria en paquete interfaz
-        DialogoAlta dialogoAlta = new DialogoAlta(this, true,logicaNegocio);
-        dialogoAlta.setLocationRelativeTo(null);
-        dialogoAlta.setVisible(true);
+        PantallaSecundaria pantallaSecundaria = new PantallaSecundaria(this, true, logicaNegocio);
+        pantallaSecundaria.setLocationRelativeTo(null);
+        pantallaSecundaria.setVisible(true);
         //El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
         rellenarListaCorredores();
+        System.out.println(logicaNegocio.getListaCorredores().toString());
     }//GEN-LAST:event_jButtonAnhadirActionPerformed
 
-    private void jButtonAltaActionPerformed
     /**
      * @param args the command line arguments
      */

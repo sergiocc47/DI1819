@@ -14,6 +14,7 @@ import java.util.List;
  * @author SC
  */
 public class LogicaNegocio {
+    
     private List<Corredor> listaCorredores;
     
     public LogicaNegocio()
@@ -21,7 +22,7 @@ public class LogicaNegocio {
         listaCorredores = new ArrayList<Corredor>();
     }
     
-    public void altaPersona(Corredor corredor)
+    public void altaCorredor(Corredor corredor)
     {
         listaCorredores.add(corredor);
     }
