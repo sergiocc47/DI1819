@@ -6,8 +6,11 @@
 package interfaz;
 
 import dto.Corredor;
-import javax.swing.DefaultListModel;
+import interfaztablemodels.TableModelCorredores;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import logica.LogicaNegocio;
+import static utils.Utils.sdf;
 
 /**
  *
@@ -15,24 +18,37 @@ import logica.LogicaNegocio;
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
 
-    private LogicaNegocio logicaNegocio;
+    private LogicaNegocio logicaNegocio = new LogicaNegocio();
+    
     
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
         initComponents();
-        logicaNegocio = new LogicaNegocio();
-        rellenarListaCorredores();
+        rellenarTablaCorredores();
     }
     
-    public void rellenarListaCorredores(){
-        DefaultListModel dlm = new DefaultListModel();
-        for (Corredor corredor : logicaNegocio.getListaCorredores())
-            dlm.addElement(corredor);
-        
-        jListCorredores.setModel(dlm);
+    public void rellenarTablaCorredores(){
+        String[] columnas = {"Nombre", "DNI", "Fecha de nacimiento", "Dirección", "Teléfono de contacto"};
+        DefaultTableModel dtm = new DefaultTableModel(columnas,0);
+        for (Corredor corredor : logicaNegocio.getListaCorredores()){
+            String[] c = new String[5];
+            c[0] = corredor.getNombre();
+            c[1] = corredor.getDni();
+            c[2] = sdf.format(corredor.getFechaNacimiento());
+            c[3] = corredor.getDireccion();
+            //c[4] = corredor.getTelefonoContacto();
+            dtm.addRow(c);
+        }
+        jTableCorredores.setModel(dtm);
                    
+    }
+    
+    //Utilizando un AbstractTableModel
+    private void rellenarTablaCorredores2()
+    {
+        jTableCorredores.setModel(new TableModelCorredores(logicaNegocio.getListaCorredores()));
     }
 
     /**
@@ -45,9 +61,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialog2 = new javax.swing.JDialog();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jListCorredores = new javax.swing.JList<>();
         jButtonAnhadir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCorredores = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
@@ -62,19 +78,25 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jListCorredores.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jListCorredores);
-
         jButtonAnhadir.setText("AÑADIR");
         jButtonAnhadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnhadirActionPerformed(evt);
             }
         });
+
+        jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableCorredores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,32 +105,34 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(350, 350, 350)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(211, 211, 211)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(412, 412, 412)
+                        .addGap(390, 390, 390)
                         .addComponent(jButtonAnhadir, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86)
+                .addGap(69, 69, 69)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAnhadir)
-                .addContainerGap(345, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnhadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirActionPerformed
-        PantallaSecundaria pantallaSecundaria = new PantallaSecundaria(this, true, logicaNegocio);
+        AltaCorredor pantallaSecundaria = new AltaCorredor(this, true, logicaNegocio);
         pantallaSecundaria.setLocationRelativeTo(null);
         pantallaSecundaria.setVisible(true);
         //El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
-        rellenarListaCorredores();
+        rellenarTablaCorredores();
+        //Diálogo para mostrar mensaje de confirmación al añadir corredor.
+        JOptionPane.showMessageDialog(this, "Corredor añadido con éxito", "Alta Corredor", JOptionPane.INFORMATION_MESSAGE);
         System.out.println(logicaNegocio.getListaCorredores().toString());
     }//GEN-LAST:event_jButtonAnhadirActionPerformed
 
@@ -151,7 +175,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnhadir;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JList<String> jListCorredores;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCorredores;
     // End of variables declaration//GEN-END:variables
 }
