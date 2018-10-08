@@ -13,14 +13,14 @@ import logica.LogicaNegocio;
  *
  * @author SC
  */
-public class PantallaSecundaria extends javax.swing.JDialog {
+public class AltaCorredor extends javax.swing.JDialog {
 
     private LogicaNegocio logicaNegocio;
 
     /**
      * Creates new form PantallaSecundaria
      */
-    public PantallaSecundaria(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
+    public AltaCorredor(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         this.logicaNegocio = logicaNegocio;
         initComponents();
