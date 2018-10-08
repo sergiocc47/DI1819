@@ -38,7 +38,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             c[1] = corredor.getDni();
             c[2] = sdf.format(corredor.getFechaNacimiento());
             c[3] = corredor.getDireccion();
-            //c[4] = corredor.getTelefonoContacto();
+            c[4] = String.valueOf(corredor.getTelefonoContacto());
             dtm.addRow(c);
         }
         jTableCorredores.setModel(dtm);
