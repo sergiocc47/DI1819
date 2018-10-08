@@ -29,92 +29,91 @@ public class AltaCarrera extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabelNombreCarrera = new javax.swing.JLabel();
         jLabelAltaCarrera = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelNombreCarrera = new javax.swing.JLabel();
+        jLabelFechaCarrera = new javax.swing.JLabel();
+        jLabelLugar = new javax.swing.JLabel();
+        jLabelNumMaxParticipantes = new javax.swing.JLabel();
+        jLabelListaCorredoresDorsales = new javax.swing.JLabel();
         jTextFieldNombreCarrera = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jSpinnerFechaCarrera = new javax.swing.JSpinner();
+        jTextFieldLugar = new javax.swing.JTextField();
+        jTextFieldNumMaxParticipantes = new javax.swing.JTextField();
+        jTextFieldListaCorredoresDorsales = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabelNombreCarrera.setText("Nombre de la carrera");
-
+        jLabelAltaCarrera.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabelAltaCarrera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAltaCarrera.setText("ALTA CARRERA");
 
-        jLabel2.setText("Fecha de la carrera");
+        jLabelNombreCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombreCarrera.setText("Nombre de la carrera");
 
-        jLabel3.setText("Lugar de la carrera");
+        jLabelFechaCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelFechaCarrera.setText("Fecha de la carrera");
 
-        jLabel4.setText("Número máximo de participantes");
+        jLabelLugar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelLugar.setText("Lugar de la carrera");
 
-        jLabel5.setText("Lista de corredores y dorsal asociado al corredor");
+        jLabelNumMaxParticipantes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNumMaxParticipantes.setText("Número máximo de participantes");
 
-        jTextField2.setText("jTextField2");
+        jLabelListaCorredoresDorsales.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelListaCorredoresDorsales.setText("Lista de corredores y dorsales");
 
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
+        jSpinnerFechaCarrera.setModel(new javax.swing.SpinnerDateModel());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelAltaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addComponent(jLabelAltaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabelNombreCarrera))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField2)
-                                        .addComponent(jTextFieldNombreCarrera)))
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addContainerGap(193, Short.MAX_VALUE))
+                    .addComponent(jLabelLugar)
+                    .addComponent(jLabelFechaCarrera)
+                    .addComponent(jLabelNombreCarrera)
+                    .addComponent(jLabelListaCorredoresDorsales)
+                    .addComponent(jLabelNumMaxParticipantes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldListaCorredoresDorsales, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(jTextFieldLugar)
+                    .addComponent(jTextFieldNombreCarrera)
+                    .addComponent(jTextFieldNumMaxParticipantes)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabelAltaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelNombreCarrera)
                     .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelFechaCarrera))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelLugar)
+                            .addComponent(jTextFieldLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelNumMaxParticipantes)
+                            .addComponent(jTextFieldNumMaxParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelListaCorredoresDorsales))
+                    .addComponent(jTextFieldListaCorredoresDorsales, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
 
@@ -125,72 +124,32 @@ public class AltaCarrera extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addGap(192, 192, 192))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(82, 82, 82))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AltaCarrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AltaCarrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AltaCarrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AltaCarrera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AltaCarrera dialog = new AltaCarrera(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelAltaCarrera;
+    private javax.swing.JLabel jLabelFechaCarrera;
+    private javax.swing.JLabel jLabelListaCorredoresDorsales;
+    private javax.swing.JLabel jLabelLugar;
     private javax.swing.JLabel jLabelNombreCarrera;
+    private javax.swing.JLabel jLabelNumMaxParticipantes;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JSpinner jSpinnerFechaCarrera;
+    private javax.swing.JTextField jTextFieldListaCorredoresDorsales;
+    private javax.swing.JTextField jTextFieldLugar;
     private javax.swing.JTextField jTextFieldNombreCarrera;
+    private javax.swing.JTextField jTextFieldNumMaxParticipantes;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -26,7 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="206" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -35,7 +35,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,42 +47,27 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabelAltaCarrera" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
-                          <Component id="jLabelAltaCarrera" min="-2" pref="205" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextField4" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jTextField3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabelNombreCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jTextField2" max="32767" attributes="0"/>
-                                          <Component id="jTextFieldNombreCarrera" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
+                      <Component id="jLabelLugar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelFechaCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNombreCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelListaCorredoresDorsales" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNumMaxParticipantes" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="193" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jTextFieldListaCorredoresDorsales" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jSpinnerFechaCarrera" pref="248" max="32767" attributes="0"/>
+                      <Component id="jTextFieldLugar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jTextFieldNombreCarrera" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jTextFieldNumMaxParticipantes" alignment="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -91,80 +76,102 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Component id="jLabelAltaCarrera" min="-2" pref="53" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelNombreCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldNombreCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelNombreCarrera" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldNombreCarrera" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jSpinnerFechaCarrera" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelFechaCarrera" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelLugar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextFieldLugar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelNumMaxParticipantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextFieldNumMaxParticipantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelListaCorredoresDorsales" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jTextFieldListaCorredoresDorsales" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="77" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelNombreCarrera">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Nombre de la carrera"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelAltaCarrera">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="36" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="ALTA CARRERA"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="jLabelNombreCarrera">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Nombre de la carrera"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelFechaCarrera">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fecha de la carrera"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="jLabelLugar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Lugar de la carrera"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="jLabelNumMaxParticipantes">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero m&#xe1;ximo de participantes"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="jLabelListaCorredoresDorsales">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lista de corredores y dorsal asociado al corredor"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Lista de corredores y dorsales"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombreCarrera">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JSpinner" name="jSpinnerFechaCarrera">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="now" stepSize="5" type="date"/>
+            </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jTextFieldLugar">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField4"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jTextFieldNumMaxParticipantes">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldListaCorredoresDorsales">
         </Component>
       </SubComponents>
     </Container>
