@@ -7,6 +7,7 @@ package logica;
 
 import dto.Corredor;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,6 +30,16 @@ public class LogicaNegocio {
 
     public List<Corredor> getListaCorredores() {
         return listaCorredores;
+    }
+    
+    public void listarCorredores() {
+        Iterator it = listaCorredores.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+    public void eliminarLista() {
+        listaCorredores.clear();
     }
     
 }

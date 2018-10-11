@@ -180,16 +180,16 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldDireccion">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldTelefonoContacto">
-        </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFechaNacimiento">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1538120449356" stepSize="5" type="date"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldDireccion">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldTelefonoContacto">
         </Component>
         <Component class="javax.swing.JButton" name="jButtonAceptar">
           <Properties>

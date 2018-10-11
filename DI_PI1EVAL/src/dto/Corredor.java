@@ -41,7 +41,6 @@ public class Corredor implements Comparable<Corredor> {
         this.fechaNacimiento = fechaNacimiento;
         this.direccion = direccion;
         this.telefonoContacto = telefonoContacto;
-
     }
 
     public String getNombre() {
@@ -73,7 +72,6 @@ public class Corredor implements Comparable<Corredor> {
             throw new IllegalArgumentException("El DNI no puede ser null");
         }
         this.dni = dni;
-
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {

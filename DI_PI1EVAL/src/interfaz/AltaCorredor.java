@@ -16,14 +16,29 @@ import logica.LogicaNegocio;
 public class AltaCorredor extends javax.swing.JDialog {
 
     private LogicaNegocio logicaNegocio;
+    private Corredor corredorModificar = null;
 
     /**
      * Creates new form PantallaSecundaria
      */
+    //Constructor Alta
     public AltaCorredor(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         this.logicaNegocio = logicaNegocio;
         initComponents();
+    }
+
+    //Constructor Modificar. Será un alta si el valor de corredorModificar es null 
+    //y será una modificación si tiene un valor
+    public AltaCorredor(java.awt.Frame parent, boolean modal, Corredor corredorModificar) {
+        super(parent, modal);
+        this.corredorModificar = corredorModificar;
+        initComponents();
+        jTextFieldNombre.setText(corredorModificar.getNombre());
+        jTextFieldDNI.setText(corredorModificar.getDni());
+        jSpinnerFechaNacimiento.setValue(corredorModificar.getFechaNacimiento());
+        jTextFieldDireccion.setText(corredorModificar.getDireccion());
+        jTextFieldTelefonoContacto.setText(String.valueOf(corredorModificar.getTelefonoContacto()));
     }
 
     /**
@@ -44,9 +59,9 @@ public class AltaCorredor extends javax.swing.JDialog {
         jLabelTelefonoContacto = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldDNI = new javax.swing.JTextField();
+        jSpinnerFechaNacimiento = new javax.swing.JSpinner();
         jTextFieldDireccion = new javax.swing.JTextField();
         jTextFieldTelefonoContacto = new javax.swing.JTextField();
-        jSpinnerFechaNacimiento = new javax.swing.JSpinner();
         jButtonAceptar = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
 
@@ -181,8 +196,18 @@ public class AltaCorredor extends javax.swing.JDialog {
         Date fechaNacimiento = (Date) jSpinnerFechaNacimiento.getValue();
         String direccion = jTextFieldDireccion.getText();
         int telefonoContacto = Integer.parseInt(jTextFieldTelefonoContacto.getText());
-        Corredor c = new Corredor(nombre, dni, fechaNacimiento, direccion, telefonoContacto);
-        logicaNegocio.altaCorredor(c);
+        //Comprobamos si es un alta o una modificación
+        if (corredorModificar == null) {
+            Corredor c = new Corredor(nombre, dni, fechaNacimiento, direccion, telefonoContacto);
+            logicaNegocio.altaCorredor(c);
+        } else {
+            corredorModificar.setNombre(nombre);
+            corredorModificar.setDni(dni);
+            corredorModificar.setDireccion(direccion);
+            corredorModificar.setFechaNacimiento(fechaNacimiento);
+            corredorModificar.setDireccion(direccion);
+            corredorModificar.setTelefonoContacto(telefonoContacto);
+        }
         dispose();
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
