@@ -178,6 +178,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         int seleccionado = jTableCorredores.getSelectedRow();
         Corredor corredorSeleccionado = logicaNegocio.getListaCorredores().get(seleccionado);
         AltaCorredor dialogoBorrar = new AltaCorredor ();
+        //continuar código
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     /**
