@@ -2,6 +2,7 @@ package dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static utils.Utils.sdf;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -88,7 +89,7 @@ public class Corredor implements Comparable<Corredor> {
 
     @Override
     public String toString() {
-        return nombre;
+        return "Corredor{" + "nombre=" + nombre + ", dni=" + dni + ", fechaNacimiento=" + sdf.format(fechaNacimiento) + ", direccion=" + direccion + ", telefonoContacto=" + telefonoContacto + '}';
     }
 
     @Override

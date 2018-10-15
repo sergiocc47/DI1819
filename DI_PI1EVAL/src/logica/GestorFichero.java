@@ -46,13 +46,16 @@ public class GestorFichero {
                 String[] datos = linea.split(";");
                 String nombre = datos[0];
                 String dni = datos[1];
+                Date fechaNacimiento = null;    //inicializamos a null fuera del try
                 try {
-                    Date fechaNacimiento = sdf.parse(datos[2]);
+                    fechaNacimiento = sdf.parse(datos[2]);  
                 } catch (ParseException ex) {
                     Logger.getLogger(GestorFichero.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                String dirección = datos[3];
+                String direccion = datos[3];
                 int telefonoContacto = Integer.parseInt(datos[4]);
+                Corredor c = new Corredor (nombre, dni, fechaNacimiento, direccion, telefonoContacto);
+                logicaNegocio.altaCorredor(c);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GestorFichero.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +73,7 @@ public class GestorFichero {
             
             List<Corredor> listaCorredores = logicaNegocio.getListaCorredores();
             for (Corredor c : logicaNegocio.getListaCorredores()){
-                String linea = c.getNombre() + ";" + c.getDni() + ";" + c.getFechaNacimiento() + ";" + c.getDireccion() + ";" + c.getTelefonoContacto();
+                String linea = c.getNombre() + ";" + c.getDni() + ";" + sdf.format(c.getFechaNacimiento()) + ";" + c.getDireccion() + ";" + c.getTelefonoContacto();
                 pw.println(linea);
             }
             

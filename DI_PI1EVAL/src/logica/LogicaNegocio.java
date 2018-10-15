@@ -15,31 +15,32 @@ import java.util.List;
  * @author SC
  */
 public class LogicaNegocio {
-    
+
     private List<Corredor> listaCorredores;
-    
-    public LogicaNegocio()
-    {
+
+    public LogicaNegocio() {
         listaCorredores = new ArrayList<Corredor>();
     }
-    
-    public void altaCorredor(Corredor corredor)
-    {
+
+    public void altaCorredor(Corredor corredor) {
         listaCorredores.add(corredor);
     }
 
     public List<Corredor> getListaCorredores() {
         return listaCorredores;
     }
-    
+
     public void listarCorredores() {
+        System.out.println("LISTA CORREDORES:");
         Iterator it = listaCorredores.iterator();
         while (it.hasNext()) {
             System.out.println(it.next());
         }
+        System.out.println("----------------------------------------------");
     }
+
     public void eliminarLista() {
         listaCorredores.clear();
     }
-    
+
 }

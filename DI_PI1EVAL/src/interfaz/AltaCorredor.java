@@ -6,6 +6,7 @@
 package interfaz;
 
 import dto.Corredor;
+import java.awt.Frame;
 import java.util.Date;
 import logica.LogicaNegocio;
 
@@ -17,6 +18,7 @@ public class AltaCorredor extends javax.swing.JDialog {
 
     private LogicaNegocio logicaNegocio;
     private Corredor corredorModificar = null;
+    private Corredor corredorBorrar = null;
 
     /**
      * Creates new form PantallaSecundaria
@@ -40,6 +42,16 @@ public class AltaCorredor extends javax.swing.JDialog {
         jTextFieldDireccion.setText(corredorModificar.getDireccion());
         jTextFieldTelefonoContacto.setText(String.valueOf(corredorModificar.getTelefonoContacto()));
     }
+    
+    //Constructor Borrar
+
+    public AltaCorredor(LogicaNegocio logicaNegocio, java.awt.Frame parent, boolean modal, Corredor corredorBorrar) {
+        super(parent, modal);
+        this.corredorBorrar = corredorBorrar;
+        initComponents();
+        int posicion = logicaNegocio
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

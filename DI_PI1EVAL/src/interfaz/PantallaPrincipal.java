@@ -66,6 +66,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCorredores = new javax.swing.JTable();
         jButtonModificar = new javax.swing.JButton();
+        jButtonBorrar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
@@ -107,6 +108,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButtonBorrar.setText("BORRAR");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,10 +125,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                         .addGap(211, 211, 211)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
+                        .addGap(228, 228, 228)
                         .addComponent(jButtonAnhadir, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(jButtonModificar)))
+                        .addGap(68, 68, 68)
+                        .addComponent(jButtonModificar)
+                        .addGap(79, 79, 79)
+                        .addComponent(jButtonBorrar)))
                 .addContainerGap(260, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,9 +139,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 .addGap(69, 69, 69)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAnhadir)
-                    .addComponent(jButtonModificar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonBorrar)
+                    .addComponent(jButtonAnhadir))
                 .addContainerGap(194, Short.MAX_VALUE))
         );
 
@@ -148,11 +159,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Corredor añadido con éxito", "Alta Corredor", JOptionPane.INFORMATION_MESSAGE);
         //Creación del CSV
         gf.escribirArchivo();
-        // Lee el List con la nueva información (corredores añadidas)
+        // Lee el List con la nueva información (corredores añadidos)
         gf.leerArchivo();
-        logicaNegocio.listarCorredores();
-        System.out.println(logicaNegocio.getListaCorredores().toString());
-        
+        logicaNegocio.listarCorredores();       
     }//GEN-LAST:event_jButtonAnhadirActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
@@ -162,7 +171,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         dialogoModificar.setLocationRelativeTo(null);
         dialogoModificar.setVisible(true);
         rellenarTablaCorredores();
+        logicaNegocio.listarCorredores();
     }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        int seleccionado = jTableCorredores.getSelectedRow();
+        Corredor corredorSeleccionado = logicaNegocio.getListaCorredores().get(seleccionado);
+        AltaCorredor dialogoBorrar = new AltaCorredor ();
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +218,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnhadir;
+    private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JScrollPane jScrollPane1;
