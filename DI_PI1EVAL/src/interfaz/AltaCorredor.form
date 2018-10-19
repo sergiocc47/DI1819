@@ -46,39 +46,49 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabelTelefonoContacto" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelDireccion" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
-                              <Component id="jLabelDNI" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
-                              <Component id="jLabelNombre" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
-                              <Component id="jLabelFechaNacimiento" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldDireccion" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldDNI" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNombre" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldTelefonoContacto" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jSpinnerFechaNacimiento" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabelTelefonoContacto" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelDireccion" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                                      <Component id="jLabelDNI" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                                      <Component id="jLabelNombre" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                                      <Component id="jLabelFechaNacimiento" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jTextFieldDireccion" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldDNI" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldNombre" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldTelefonoContacto" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jSpinnerFechaNacimiento" alignment="1" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="jLabelAltaCorredor" min="-2" pref="812" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Component id="jLabelAltaCorredor" min="-2" pref="812" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="335" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="validationPanelCorredor" min="-2" pref="424" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jButtonAceptar" min="-2" pref="184" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                  <Component id="jButtonLimpiar" min="-2" pref="184" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="335" max="-2" attributes="0"/>
-                  <Component id="jButtonAceptar" min="-2" pref="184" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                  <Component id="jButtonLimpiar" min="-2" pref="184" max="-2" attributes="0"/>
-                  <EmptySpace pref="126" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -116,7 +126,9 @@
                       <Component id="jLabelTelefonoContacto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldTelefonoContacto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="validationPanelCorredor" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonLimpiar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="jButtonAceptar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
@@ -177,8 +189,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Nombre" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="DNI" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFechaNacimiento">
           <Properties>
@@ -188,8 +206,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDireccion">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Direcci&#xf3;n" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTelefonoContacto">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Tel&#xe9;fono de contacto" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonAceptar">
           <Properties>
@@ -212,6 +236,8 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="org.netbeans.validation.api.ui.swing.ValidationPanel" name="validationPanelCorredor">
         </Component>
       </SubComponents>
     </Container>

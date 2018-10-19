@@ -8,7 +8,11 @@ package interfaz;
 import dto.Corredor;
 import java.awt.Frame;
 import java.util.Date;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import logica.LogicaNegocio;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 /**
  *
@@ -18,7 +22,6 @@ public class AltaCorredor extends javax.swing.JDialog {
 
     private LogicaNegocio logicaNegocio;
     private Corredor corredorModificar = null;
-    private Corredor corredorBorrar = null;
 
     /**
      * Creates new form PantallaSecundaria
@@ -28,6 +31,26 @@ public class AltaCorredor extends javax.swing.JDialog {
         super(parent, modal);
         this.logicaNegocio = logicaNegocio;
         initComponents();
+        
+        jButtonAceptar.setEnabled(false);
+        ValidationGroup group = validationPanelCorredor.getValidationGroup();
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        //group.add(jTextFieldDNI, StringValidators.//método DNI en utils);
+        group.add(jTextFieldDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldTelefonoContacto, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+        
+        validationPanelCorredor.addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                if (validationPanelCorredor.getProblem()==null){
+                    jButtonAceptar.setEnabled(true);
+                }else{
+                    jButtonAceptar.setEnabled(true);
+                }
+            }
+            
+        });
+        
     }
 
     //Constructor Modificar. Será un alta si el valor de corredorModificar es null 
@@ -41,15 +64,25 @@ public class AltaCorredor extends javax.swing.JDialog {
         jSpinnerFechaNacimiento.setValue(corredorModificar.getFechaNacimiento());
         jTextFieldDireccion.setText(corredorModificar.getDireccion());
         jTextFieldTelefonoContacto.setText(String.valueOf(corredorModificar.getTelefonoContacto()));
-    }
-    
-    //Constructor Borrar
-
-    public AltaCorredor(LogicaNegocio logicaNegocio, java.awt.Frame parent, boolean modal, Corredor corredorBorrar) {
-        super(parent, modal);
-        this.corredorBorrar = corredorBorrar;
-        initComponents();
-        int posicion = logicaNegocio
+        
+        ValidationGroup group = validationPanelCorredor.getValidationGroup();
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        //group.add(jTextFieldDNI, StringValidators.//método DNI en utils);
+        group.add(jTextFieldDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldTelefonoContacto, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+        
+        validationPanelCorredor.addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                if (validationPanelCorredor.getProblem()==null){
+                    jButtonAceptar.setEnabled(true);
+                }else{
+                    jButtonAceptar.setEnabled(true);
+                }
+            }
+            
+        });
+        
     }
     
 
@@ -76,6 +109,7 @@ public class AltaCorredor extends javax.swing.JDialog {
         jTextFieldTelefonoContacto = new javax.swing.JTextField();
         jButtonAceptar = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
+        validationPanelCorredor = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -98,7 +132,15 @@ public class AltaCorredor extends javax.swing.JDialog {
         jLabelTelefonoContacto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelTelefonoContacto.setText("Teléfono de contacto");
 
+        jTextFieldNombre.setName("Nombre"); // NOI18N
+
+        jTextFieldDNI.setName("DNI"); // NOI18N
+
         jSpinnerFechaNacimiento.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1538120449356L), null, null, java.util.Calendar.DAY_OF_MONTH));
+
+        jTextFieldDireccion.setName("Dirección"); // NOI18N
+
+        jTextFieldTelefonoContacto.setName("Teléfono de contacto"); // NOI18N
 
         jButtonAceptar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonAceptar.setText("ACEPTAR");
@@ -121,32 +163,38 @@ public class AltaCorredor extends javax.swing.JDialog {
         jPanelAltaCorredorLayout.setHorizontalGroup(
             jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
-                        .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelTelefonoContacto)
-                            .addComponent(jLabelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelFechaNacimiento))
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldDireccion)
-                            .addComponent(jTextFieldDNI)
-                            .addComponent(jTextFieldNombre)
-                            .addComponent(jTextFieldTelefonoContacto, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSpinnerFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
+                                .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabelTelefonoContacto)
+                                    .addComponent(jLabelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelFechaNacimiento))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldDireccion)
+                                    .addComponent(jTextFieldDNI)
+                                    .addComponent(jTextFieldNombre)
+                                    .addComponent(jTextFieldTelefonoContacto, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jSpinnerFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabelAltaCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabelAltaCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(335, 335, 335)
+                        .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(validationPanelCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelAltaCorredorLayout.createSequentialGroup()
+                                .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAltaCorredorLayout.createSequentialGroup()
-                .addGap(335, 335, 335)
-                .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanelAltaCorredorLayout.setVerticalGroup(
             jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +223,9 @@ public class AltaCorredor extends javax.swing.JDialog {
                 .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTelefonoContacto)
                     .addComponent(jTextFieldTelefonoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(validationPanelCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelAltaCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -243,5 +293,6 @@ public class AltaCorredor extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldDireccion;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldTelefonoContacto;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanelCorredor;
     // End of variables declaration//GEN-END:variables
 }

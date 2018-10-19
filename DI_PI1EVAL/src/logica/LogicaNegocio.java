@@ -25,6 +25,10 @@ public class LogicaNegocio {
     public void altaCorredor(Corredor corredor) {
         listaCorredores.add(corredor);
     }
+    
+    public void borrarCorredor(Corredor corredor){
+        listaCorredores.remove(corredor);
+    }
 
     public List<Corredor> getListaCorredores() {
         return listaCorredores;
