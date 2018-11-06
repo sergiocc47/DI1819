@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import logica.LogicaNegocio;
+import org.netbeans.validation.api.builtin.stringvalidation.DNIValidator;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -24,67 +25,67 @@ public class AltaCorredor extends javax.swing.JDialog {
     private Corredor corredorModificar = null;
 
     /**
-     * Creates new form PantallaSecundaria
+     * Creates new form AltaCorredor
      */
-    //Constructor Alta
+    // Constructor Alta
     public AltaCorredor(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         this.logicaNegocio = logicaNegocio;
         initComponents();
-        
+
         jButtonAceptar.setEnabled(false);
         ValidationGroup group = validationPanelCorredor.getValidationGroup();
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        //group.add(jTextFieldDNI, StringValidators.//método DNI en utils);
+        group.add(jTextFieldDNI, StringValidators.REQUIRE_NON_EMPTY_STRING, new DNIValidator());        //simple, mejorar
         group.add(jTextFieldDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldTelefonoContacto, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
-        
-        validationPanelCorredor.addChangeListener(new ChangeListener(){
+
+        validationPanelCorredor.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
-                if (validationPanelCorredor.getProblem()==null){
+                if (validationPanelCorredor.getProblem() == null) {
                     jButtonAceptar.setEnabled(true);
-                }else{
-                    jButtonAceptar.setEnabled(true);
+                } else {
+                    jButtonAceptar.setEnabled(false);
                 }
             }
-            
+
         });
-        
+
     }
 
-    //Constructor Modificar. Será un alta si el valor de corredorModificar es null 
-    //y será una modificación si tiene un valor
+    // Constructor Modificar. Será un alta si el valor de corredorModificar es null 
+    // y será una modificación si tiene un valor
     public AltaCorredor(java.awt.Frame parent, boolean modal, Corredor corredorModificar) {
         super(parent, modal);
         this.corredorModificar = corredorModificar;
         initComponents();
+        
         jTextFieldNombre.setText(corredorModificar.getNombre());
         jTextFieldDNI.setText(corredorModificar.getDni());
         jSpinnerFechaNacimiento.setValue(corredorModificar.getFechaNacimiento());
         jTextFieldDireccion.setText(corredorModificar.getDireccion());
         jTextFieldTelefonoContacto.setText(String.valueOf(corredorModificar.getTelefonoContacto()));
-        
+
         ValidationGroup group = validationPanelCorredor.getValidationGroup();
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        //group.add(jTextFieldDNI, StringValidators.//método DNI en utils);
+        group.add(jTextFieldDNI, StringValidators.REQUIRE_NON_EMPTY_STRING, new DNIValidator());        //simple, mejorar
         group.add(jTextFieldDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldTelefonoContacto, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
-        
-        validationPanelCorredor.addChangeListener(new ChangeListener(){
+
+        validationPanelCorredor.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
-                if (validationPanelCorredor.getProblem()==null){
+                if (validationPanelCorredor.getProblem() == null) {
                     jButtonAceptar.setEnabled(true);
-                }else{
-                    jButtonAceptar.setEnabled(true);
+                } else {
+                    jButtonAceptar.setEnabled(false);
                 }
             }
-            
+
         });
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -258,7 +259,7 @@ public class AltaCorredor extends javax.swing.JDialog {
         Date fechaNacimiento = (Date) jSpinnerFechaNacimiento.getValue();
         String direccion = jTextFieldDireccion.getText();
         int telefonoContacto = Integer.parseInt(jTextFieldTelefonoContacto.getText());
-        //Comprobamos si es un alta o una modificación
+        // Comprobamos si es un alta o una modificación
         if (corredorModificar == null) {
             Corredor c = new Corredor(nombre, dni, fechaNacimiento, direccion, telefonoContacto);
             logicaNegocio.altaCorredor(c);

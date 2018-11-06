@@ -5,10 +5,13 @@
  */
 package logica;
 
+import dto.Carrera;
 import dto.Corredor;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -17,9 +20,12 @@ import java.util.List;
 public class LogicaNegocio {
 
     private List<Corredor> listaCorredores;
+    
+    private List<Carrera> listaCarreras;
 
     public LogicaNegocio() {
         listaCorredores = new ArrayList<Corredor>();
+        listaCarreras = new ArrayList<Carrera>();
     }
 
     public void altaCorredor(Corredor corredor) {
@@ -43,8 +49,32 @@ public class LogicaNegocio {
         System.out.println("----------------------------------------------");
     }
 
-    public void eliminarLista() {
+    public void eliminarListaCorredores() {
         listaCorredores.clear();
     }
+    
+    public void altaCarrera(Carrera carrera){
+        listaCarreras.add(carrera);
+    }
 
+    public void borrarCarrera (Carrera carrera){
+        listaCarreras.remove(carrera);
+    }
+
+    public List<Carrera> getListaCarreras() {
+        return listaCarreras;
+    }
+    
+    public void listarCarreras(){
+        System.out.println("LISTA CARRERAS:");
+        Iterator it = listaCarreras.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
+        System.out.println("----------------------------------------------");
+    }
+    
+    public void eliminarListaCarreras(){
+        listaCarreras.clear();
+    }
 }

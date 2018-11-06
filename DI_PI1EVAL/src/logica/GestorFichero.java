@@ -78,7 +78,7 @@ public class GestorFichero {
             }
             
             pw.close();
-            logicaNegocio.eliminarLista();     //vacía la lista para evitar información duplicada
+            logicaNegocio.eliminarListaCorredores();     //vacía la lista para evitar información duplicada
             
         } catch (IOException ex) {
             Logger.getLogger(GestorFichero.class.getName()).log(Level.SEVERE, null, ex);

@@ -13,7 +13,7 @@ import java.util.TreeMap;
  *
  * @author SC
  */
-public class Carrera {
+public class Carrera implements Comparable<Carrera> {
 
     /*
     Gestión de carreras. Cada carrera tendrá una lista de participantes. Se
@@ -28,6 +28,7 @@ public class Carrera {
     private Date fechaCarrera;
     private String lugar;
     private int numMaxParticipantes;
+    private Corredor[] listaCorredoresInscritos;
     private TreeMap<Integer, Corredor> listaCorredoresDorsales;
 
     public Carrera(String nombreCarrera, Date fechaCarrera, String lugar, int numMaxParticipantes) {
@@ -35,6 +36,7 @@ public class Carrera {
         this.fechaCarrera = fechaCarrera;
         this.lugar = lugar;
         this.numMaxParticipantes = numMaxParticipantes;
+        this.listaCorredoresInscritos = new Corredor[numMaxParticipantes];
         this.listaCorredoresDorsales = new TreeMap<Integer, Corredor>();
     }
 
@@ -52,6 +54,10 @@ public class Carrera {
 
     public int getNumMaxParticipantes() {
         return numMaxParticipantes;
+    }
+
+    public Corredor[] getListaCorredoresInscritos() {
+        return listaCorredoresInscritos;
     }
 
     public TreeMap<Integer, Corredor> getListaCorredoresDorsales() {
@@ -74,6 +80,10 @@ public class Carrera {
         this.numMaxParticipantes = numMaxParticipantes;
     }
 
+    public void setListaCorredoresInscritos(Corredor[] listaCorredoresInscritos) {
+        this.listaCorredoresInscritos = listaCorredoresInscritos;
+    }
+
     public void setListaCorredoresDorsales(TreeMap<Integer, Corredor> listaCorredoresDorsales) {
         this.listaCorredoresDorsales = listaCorredoresDorsales;
     }
@@ -81,6 +91,12 @@ public class Carrera {
     @Override
     public String toString() {
         return "Carrera{" + "nombreCarrera=" + nombreCarrera + ", lugar=" + lugar + '}';
+    }
+
+    // modificar (método innecesario si no implementa Comparable)
+    @Override
+    public int compareTo(Carrera t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
