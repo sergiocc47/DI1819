@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class GestionClienteTwitter {
 
+    /*
     //TODO listaSiguiendo y listaSeguidores
     private static Usuario queridoAntonio = new Usuario("Alberto González");
     private static Usuario usuario01 = new Usuario("Little Richard");
@@ -39,5 +40,5 @@ public class GestionClienteTwitter {
         
         return listaTweets;
     }
-    
+    */
 }

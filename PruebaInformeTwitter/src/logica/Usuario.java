@@ -13,37 +13,60 @@ import java.util.List;
  */
 public class Usuario {
     
-    private String nombre;
-    private List<Tweet> tweets;
-    private List<Usuario> siguiendo;
-    private List<Usuario> seguidores;
+    private String nameUser;
+    //private List<Usuario> listaFollows;
+    //private List<Usuario> listaFollowers;
+    private List<Tweet> listaTweets;
+    /*private List<String> listaFollows;
+    private List<String> listaFollowers;
+    private List<String> listaTweets;*/
 
-    public Usuario(String nombre, List<Tweet> tweets, List<Usuario> siguiendo, List<Usuario> seguidores) {
-        this.nombre = nombre;
-        this.tweets = tweets;
-        this.siguiendo = siguiendo;
-        this.seguidores = seguidores;
-    }
-
-    public Usuario(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public List<Tweet> getTweets() {
-        return tweets;
-    }
-
-    public List<Usuario> getSiguiendo() {
-        return siguiendo;
-    }
-
-    public List<Usuario> getSeguidores() {
-        return seguidores;
+    public Usuario(String nameUser, List<Tweet> listaTweets) {
+        this.nameUser = nameUser;
+        this.listaTweets = listaTweets;
     }
     
+    /*public Usuario(String nameUser) {
+        this.nameUser = nameUser;
+    }
+    
+    public Usuario(String nameUser, List<Usuario> listaFollows, List<Usuario> listaFollowers) {
+        this.nameUser = nameUser;
+        this.listaFollows = listaFollows;
+        this.listaFollowers = listaFollowers;
+    }*/
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    /*public List<Usuario> getListaFollows() {
+        return listaFollows;
+    }
+
+    public void setListaFollows(List<Usuario> listaFollows) {
+        this.listaFollows = listaFollows;
+    }
+
+    public List<Usuario> getListaFollowers() {
+        return listaFollowers;
+    }
+
+    public void setListaFollowers(List<Usuario> listaFollowers) {
+        this.listaFollowers = listaFollowers;
+    }*/
+
+    public List<Tweet> getListaTweets() {
+        return listaTweets;
+    }
+
+    public void setListaTweets(List<Tweet> listaTweets) {
+        this.listaTweets = listaTweets;
+    }
+ 
     
 }

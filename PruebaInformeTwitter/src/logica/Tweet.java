@@ -15,12 +15,11 @@ import java.util.Date;
 public class Tweet {
     
     private String nombreUsuario;
-    private String fechaPublicacion;
+    private Date fechaPublicacion;
     private String texto;
 
-    public Tweet(String nombreUsuario, String fechaPublicacion, String texto) {
-        this.nombreUsuario = nombreUsuario;
-        this.fechaPublicacion = fechaPublicacion;
+    public Tweet(String texto) {
+        this.fechaPublicacion = new Date();     // así coge la fecha de hoy (no nos preocupamos del formato)
         this.texto = texto;
     }
 
@@ -28,7 +27,7 @@ public class Tweet {
         return nombreUsuario;
     }
 
-    public String getFechaPublicacion() {
+    public Date getFechaPublicacion() {
         return fechaPublicacion;
     }
 
