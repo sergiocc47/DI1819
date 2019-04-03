@@ -7,6 +7,7 @@ package dto;
 
 import java.util.Date;
 import java.util.List;
+import utils.Utils;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Ticket {
     private int numeroTicket;   //único
     private Date fecha;         //fecha y hora del ticket
     private boolean estado;     //cerrado=true abierto=false
-    private Mesa mesaTicket;
+    private Mesa mesaTicket;    //TODO ¿Mesa o int?
     private List<ProductoTicket> listaProductosTicket;
 
     public Ticket(int numeroTicket, Date fecha, boolean estado, Mesa mesaTicket, List<ProductoTicket> listaProductosTicket) {
@@ -70,7 +71,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" + "numeroTicket=" + numeroTicket + ", fecha=" + fecha + ", estado=" + estado + ", mesaTicket=" + mesaTicket + ", listaProductosTicket=" + listaProductosTicket + '}';
+        return "Ticket{" + "numeroTicket=" + numeroTicket + ", fecha=" +  Utils.sdf.format(fecha) + ", estado=" + estado + ", mesaTicket=" + mesaTicket + ", listaProductosTicket=" + listaProductosTicket + '}';
     }
 
 }

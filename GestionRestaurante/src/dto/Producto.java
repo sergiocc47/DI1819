@@ -13,10 +13,11 @@ public class Producto {
 
     private String nombre;
     private float precio;
-    //private enum Categoria {Bebidas, PrimerPlato, SegundoPlato, Postre, Otros};   //más correcto: enumeración que debería meterse como una inner class
-    private String categoria;
+    private Categorias categoria;   //si no nos queremos complicar con la enumeración podemos utilizar un String
+    public enum Categorias {BEBIDAS, PRIMER_PLATO, SEGUNDO_PLATO, POSTRE, OTROS};   //más correcto: enumeración que debería meterse como una inner class
+    
 
-    public Producto(String nombre, float precio, String categoria) {
+    public Producto(String nombre, float precio, Categorias categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
@@ -38,11 +39,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getCategoria() {
+    public Categorias getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categorias categoria) {
         this.categoria = categoria;
     }
 
