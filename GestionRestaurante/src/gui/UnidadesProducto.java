@@ -11,11 +11,14 @@ package gui;
  */
 public class UnidadesProducto extends javax.swing.JDialog {
 
+    private AperturaTicket aperturaTicket;
+    
     /**
      * Creates new form UnidadesProducto
      */
-    public UnidadesProducto(java.awt.Frame parent, boolean modal) {
+    public UnidadesProducto(java.awt.Dialog parent, boolean modal) {    // Frame cambiado a Dialog
         super(parent, modal);
+        aperturaTicket = (AperturaTicket)parent;
         initComponents();
     }
 
@@ -46,6 +49,11 @@ public class UnidadesProducto extends javax.swing.JDialog {
         jLabelCantidad.setText("Cantidad");
 
         jButtonAceptarCantidad.setText("Aceptar");
+        jButtonAceptarCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarCantidadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +90,11 @@ public class UnidadesProducto extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAceptarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarCantidadActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jButtonAceptarCantidadActionPerformed
 
     
 

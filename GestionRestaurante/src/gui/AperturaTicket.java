@@ -11,11 +11,14 @@ package gui;
  */
 public class AperturaTicket extends javax.swing.JDialog {
 
+    private PantallaPrincipal pantallaPrincipal;
+    
     /**
      * Creates new form GestionTicket
      */
     public AperturaTicket(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
     }
 
@@ -28,17 +31,25 @@ public class AperturaTicket extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonAnhadirProducto = new javax.swing.JButton();
-        jButtonEliminarProducto = new javax.swing.JButton();
+        jLabelAperturaTicket = new javax.swing.JLabel();
+        jButtonAnhadirProductoTicket = new javax.swing.JButton();
+        jButtonEliminarProductoTicket = new javax.swing.JButton();
         jButtonCerrarTicket = new javax.swing.JButton();
         jScrollPaneProductosTicket = new javax.swing.JScrollPane();
         jTableProductosTicket = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButtonAnhadirProducto.setText("Añadir producto");
+        jLabelAperturaTicket.setText("APERTURA TICKET");
 
-        jButtonEliminarProducto.setText("Eliminar producto");
+        jButtonAnhadirProductoTicket.setText("Añadir producto");
+        jButtonAnhadirProductoTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnhadirProductoTicketActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminarProductoTicket.setText("Eliminar producto");
 
         jButtonCerrarTicket.setText("Cerrar ticket");
 
@@ -62,37 +73,47 @@ public class AperturaTicket extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonEliminarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAnhadirProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEliminarProductoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAnhadirProductoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonCerrarTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelAperturaTicket)
+                    .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jButtonAnhadirProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEliminarProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCerrarTicket)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabelAperturaTicket)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAnhadirProductoTicket)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEliminarProductoTicket)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCerrarTicket)
+                        .addGap(0, 124, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAnhadirProductoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirProductoTicketActionPerformed
+        UnidadesProducto unidadesProducto = new UnidadesProducto(this, true);
+        unidadesProducto.setVisible(true);
+    }//GEN-LAST:event_jButtonAnhadirProductoTicketActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAnhadirProducto;
+    private javax.swing.JButton jButtonAnhadirProductoTicket;
     private javax.swing.JButton jButtonCerrarTicket;
-    private javax.swing.JButton jButtonEliminarProducto;
+    private javax.swing.JButton jButtonEliminarProductoTicket;
+    private javax.swing.JLabel jLabelAperturaTicket;
     private javax.swing.JScrollPane jScrollPaneProductosTicket;
     private javax.swing.JTable jTableProductosTicket;
     // End of variables declaration//GEN-END:variables

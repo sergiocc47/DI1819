@@ -5,19 +5,75 @@
  */
 package gui;
 
+import dto.Mesa;
+import gui.tablemodels.TableModelMesas;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import logica.LogicaNegocio;
+
 /**
  *
  * @author sergio
  */
 public class GestionMesas extends javax.swing.JDialog {
 
+    private PantallaPrincipal pantallaPrincipal;
+
+    private LogicaNegocio logicaNegocio;
+
+    //Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
+    //de filtrar
+    private TableRowSorter<TableModelMesas> sorter;
+
     /**
      * Creates new form GestionMesas
      */
     public GestionMesas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        pantallaPrincipal = (PantallaPrincipal) parent;
+        this.logicaNegocio = logicaNegocio;
         initComponents();
+        jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));
     }
+    
+    //Utilizando un AbstractTableModel
+    private void rellenarTablaMesas()
+    {
+        TableModelMesas tmm = new TableModelMesas(logicaNegocio.getListaMesas());
+        jTableMesas.setModel(tmm);
+        
+        //Añadimos la funcionalidad de ordenar
+        sorter = new TableRowSorter<>(tmm);
+        jTableMesas.setRowSorter(sorter);
+        
+        //Establecemos el orden por defecto
+        List<SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new SortKey(0,SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
+        
+    }
+    
+    private void rellenarTablaMesas2()
+    {
+        String[] columnas = {"Nombre","Curso"};
+        DefaultTableModel dtm = new DefaultTableModel(columnas,0);
+        for (Mesa mesa : logicaNegocio.getListaMesas())
+        {
+            //String[] a = new String[]{Integer.toString(mesa.getIdMesa()),
+            //                          mesa.getLocalizacion(),
+            //                          Integer.toString(mesa.getCapacidad())};
+            String[] m = new String[2];
+            m[0] = Integer.toString(mesa.getIdMesa());
+            m[1] = mesa.getLocalizacion();
+            m[2] = Integer.toString(mesa.getCapacidad());
+            dtm.addRow(m);
+        }
+        jTableMesas.setModel(dtm);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,24 +84,100 @@ public class GestionMesas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabelGestionMesas = new javax.swing.JLabel();
+        jButtonAnhadirMesa = new javax.swing.JButton();
+        jButtonModificarMesa = new javax.swing.JButton();
+        jButtonEliminarMesa = new javax.swing.JButton();
+        jScrollPaneMesas = new javax.swing.JScrollPane();
+        jTableMesas = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabelGestionMesas.setText("GESTIÓN MESAS");
+
+        jButtonAnhadirMesa.setText("Añadir mesa");
+        jButtonAnhadirMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnhadirMesaActionPerformed(evt);
+            }
+        });
+
+        jButtonModificarMesa.setText("Modificar mesa");
+        jButtonModificarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarMesaActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminarMesa.setText("Eliminar mesa");
+
+        jTableMesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPaneMesas.setViewportView(jTableMesas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonModificarMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAnhadirMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEliminarMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelGestionMesas)
+                    .addComponent(jScrollPaneMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabelGestionMesas)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneMesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAnhadirMesa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonModificarMesa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEliminarMesa)
+                        .addGap(0, 124, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void jButtonAnhadirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirMesaActionPerformed
+        AltaMesa altaMesa = new AltaMesa(this, true);
+        altaMesa.setVisible(true);
+    }//GEN-LAST:event_jButtonAnhadirMesaActionPerformed
+
+    private void jButtonModificarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarMesaActionPerformed
+        AltaMesa altaMesa = new AltaMesa(this, true);
+        altaMesa.setVisible(true);
+    }//GEN-LAST:event_jButtonModificarMesaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAnhadirMesa;
+    private javax.swing.JButton jButtonEliminarMesa;
+    private javax.swing.JButton jButtonModificarMesa;
+    private javax.swing.JLabel jLabelGestionMesas;
+    private javax.swing.JScrollPane jScrollPaneMesas;
+    private javax.swing.JTable jTableMesas;
     // End of variables declaration//GEN-END:variables
 }

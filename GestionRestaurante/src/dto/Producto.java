@@ -5,17 +5,21 @@
  */
 package dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author sergio
  */
-public class Producto {
+public class Producto implements Serializable {
 
     private String nombre;
     private float precio;
     private Categorias categoria;   //si no nos queremos complicar con la enumeración podemos utilizar un String
-    public enum Categorias {BEBIDAS, PRIMER_PLATO, SEGUNDO_PLATO, POSTRE, OTROS};   //más correcto: enumeración que debería meterse como una inner class
-    
+
+    public enum Categorias {
+        BEBIDAS, PRIMER_PLATO, SEGUNDO_PLATO, POSTRE, OTROS
+    };   //más correcto: enumeración que debería meterse como una inner class
 
     public Producto(String nombre, float precio, Categorias categoria) {
         this.nombre = nombre;

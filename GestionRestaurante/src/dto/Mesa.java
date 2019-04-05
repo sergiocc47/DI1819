@@ -5,11 +5,13 @@
  */
 package dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author sergio
  */
-public class Mesa {
+public class Mesa implements Serializable {
 
     private int idMesa;
     private String localizacion;

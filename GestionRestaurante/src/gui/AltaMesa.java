@@ -11,11 +11,14 @@ package gui;
  */
 public class AltaMesa extends javax.swing.JDialog {
 
+    private GestionMesas gestionMesas;
+
     /**
      * Creates new form AltaMesa
      */
-    public AltaMesa(java.awt.Frame parent, boolean modal) {
+    public AltaMesa(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        gestionMesas = (GestionMesas) parent;
         initComponents();
     }
 
@@ -48,6 +51,11 @@ public class AltaMesa extends javax.swing.JDialog {
         jLabelCapacidad.setText("Capacidad");
 
         jButtonAltaMesaAceptar.setText("Aceptar");
+        jButtonAltaMesaAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAltaMesaAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,7 +103,11 @@ public class AltaMesa extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void jButtonAltaMesaAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaMesaAceptarActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jButtonAltaMesaAceptarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAltaMesaAceptar;

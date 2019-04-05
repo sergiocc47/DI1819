@@ -26,14 +26,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButtonEliminarProductoTicket" max="32767" attributes="0"/>
-                  <Component id="jButtonAnhadirProductoTicket" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jButtonCerrarTicket" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonModificarProductoCarta" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonAnhadirProductoCarta" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonEliminarProductoCarta" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelAperturaTicket" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPaneProductosTicket" min="-2" pref="375" max="-2" attributes="0"/>
+                  <Component id="jLabelGestionCarta" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPaneProductosCarta" alignment="0" min="-2" pref="375" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -43,16 +43,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Component id="jLabelAperturaTicket" min="-2" max="-2" attributes="0"/>
+              <Component id="jLabelGestionCarta" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPaneProductosTicket" alignment="1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneProductosCarta" alignment="1" pref="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonAnhadirProductoTicket" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonAnhadirProductoCarta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonEliminarProductoTicket" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonModificarProductoCarta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonCerrarTicket" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonEliminarProductoCarta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="124" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -62,37 +62,40 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabelAperturaTicket">
+    <Component class="javax.swing.JLabel" name="jLabelGestionCarta">
       <Properties>
-        <Property name="text" type="java.lang.String" value="APERTURA TICKET"/>
+        <Property name="text" type="java.lang.String" value="GESTI&#xd3;N CARTA"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonAnhadirProductoTicket">
+    <Component class="javax.swing.JButton" name="jButtonAnhadirProductoCarta">
       <Properties>
         <Property name="text" type="java.lang.String" value="A&#xf1;adir producto"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnhadirProductoTicketActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnhadirProductoCartaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonEliminarProductoTicket">
+    <Component class="javax.swing.JButton" name="jButtonModificarProductoCarta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modificar producto"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModificarProductoCartaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonEliminarProductoCarta">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar producto"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonCerrarTicket">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cerrar ticket"/>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPaneProductosTicket">
+    <Container class="javax.swing.JScrollPane" name="jScrollPaneProductosCarta">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTableProductosTicket">
+        <Component class="javax.swing.JTable" name="jTableProductosCarta">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
