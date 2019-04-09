@@ -6,6 +6,7 @@
 package gui;
 
 import dto.Mesa;
+import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import logica.LogicaNegocio;
 
@@ -21,6 +22,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
+        // Método para cargar lista en un ComboBox
         /*
         DefaultComboBoxModel dcm = new DefaultComboBoxModel();
         for (Mesa mesa : logicaNegocio.getListaMesas){
@@ -28,7 +30,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
         jComboBoxPrueba.setModel(dcm);
          */
-        //jTableProductosTicket.setModel(new TableModelProductosTicket(logicaNegocio.getListaProductosTicket()));
+        // Método para cargar lista en una jTable (recomendado)
+        //jTableProductosTicket.setModel(new TableModelProductosTicket(logicaNegocio.getListaProductosTicket()));   //comentado para que no falle la ejecución
         initComponents();
     }
 
@@ -189,6 +192,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                Locale.setDefault(new Locale ("es", "ES"));
                 new PantallaPrincipal().setVisible(true);
             }
         });

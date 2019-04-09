@@ -37,7 +37,7 @@ public class GestionMesas extends javax.swing.JDialog {
         pantallaPrincipal = (PantallaPrincipal) parent;
         this.logicaNegocio = logicaNegocio;
         initComponents();
-        jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));
+        //jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));     // TODO rellenar con listaMesas 
     }
     
     //Utilizando un AbstractTableModel

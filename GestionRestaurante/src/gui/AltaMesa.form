@@ -24,25 +24,33 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelLocalizacion" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelIdentificador" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelCapacidad" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelAltaMesa" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButtonAltaMesaAceptar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelLocalizacion" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelIdentificador" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelCapacidad" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabelAltaMesa" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextFieldIdentificador" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTextFieldLocalizacion" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextFieldCapacidad" alignment="0" min="-2" pref="206" max="-2" attributes="0"/>
+                          <Component id="jTextFieldCapacidad" alignment="1" pref="206" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="validationPanelAltaMesa" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,9 +74,11 @@
                   <Component id="jLabelCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="validationPanelAltaMesa" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonAltaMesaAceptar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="98" max="32767" attributes="0"/>
+              <EmptySpace pref="74" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -95,10 +105,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldIdentificador">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Identificador" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldLocalizacion">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Localizaci&#xf3;n" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldCapacidad">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="Capacidad" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAltaMesaAceptar">
       <Properties>
@@ -107,6 +126,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAltaMesaAceptarActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="org.netbeans.validation.api.ui.swing.ValidationPanel" name="validationPanelAltaMesa">
     </Component>
   </SubComponents>
 </Form>

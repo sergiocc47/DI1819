@@ -5,12 +5,19 @@
  */
 package gui;
 
+import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.netbeans.validation.api.builtin.stringvalidation.MayusculaValidator;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
+
 /**
  *
  * @author sergio
  */
 public class AltaMesa extends javax.swing.JDialog {
-
+    
     private GestionMesas gestionMesas;
 
     /**
@@ -20,6 +27,25 @@ public class AltaMesa extends javax.swing.JDialog {
         super(parent, modal);
         gestionMesas = (GestionMesas) parent;
         initComponents();
+        
+        jButtonAltaMesaAceptar.setEnabled(false);
+        ValidationGroup group = validationPanelAltaMesa.getValidationGroup();
+        group.add(jTextFieldIdentificador, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+        // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
+        group.add(jTextFieldLocalizacion, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
+        // MSG_MAYUSCULA en Bundle_es.properties
+        group.add(jTextFieldCapacidad, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+        
+        validationPanelAltaMesa.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanelAltaMesa.getProblem() == null) {
+                    jButtonAltaMesaAceptar.setEnabled(true);
+                } else {
+                    jButtonAltaMesaAceptar.setEnabled(false);
+                }
+            }
+        });
     }
 
     /**
@@ -39,6 +65,7 @@ public class AltaMesa extends javax.swing.JDialog {
         jTextFieldLocalizacion = new javax.swing.JTextField();
         jTextFieldCapacidad = new javax.swing.JTextField();
         jButtonAltaMesaAceptar = new javax.swing.JButton();
+        validationPanelAltaMesa = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,6 +76,12 @@ public class AltaMesa extends javax.swing.JDialog {
         jLabelLocalizacion.setText("Localización");
 
         jLabelCapacidad.setText("Capacidad");
+
+        jTextFieldIdentificador.setName("Identificador"); // NOI18N
+
+        jTextFieldLocalizacion.setName("Localización"); // NOI18N
+
+        jTextFieldCapacidad.setName("Capacidad"); // NOI18N
 
         jButtonAltaMesaAceptar.setText("Aceptar");
         jButtonAltaMesaAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -62,21 +95,27 @@ public class AltaMesa extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelLocalizacion)
-                    .addComponent(jLabelIdentificador)
-                    .addComponent(jLabelCapacidad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelAltaMesa)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButtonAltaMesaAceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAltaMesaAceptar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLocalizacion)
+                            .addComponent(jLabelIdentificador)
+                            .addComponent(jLabelCapacidad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelAltaMesa)
                             .addComponent(jTextFieldIdentificador)
                             .addComponent(jTextFieldLocalizacion)
-                            .addComponent(jTextFieldCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextFieldCapacidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))))
                 .addGap(46, 46, 46))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(validationPanelAltaMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,17 +134,25 @@ public class AltaMesa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCapacidad)
                     .addComponent(jTextFieldCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(validationPanelAltaMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAltaMesaAceptar)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAltaMesaAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaMesaAceptarActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
+        // TODO comprobar si la mesa existe antes de añadirla
+        /*
+        // Necesario para validacion tradicional
+        if (validarFormulario()) {
+        JOptionPane.showMessageDialog(this, "Formulario correcto");     //aquí llamaríamos a la lógica y haríamos lo que fuese
+        setVisible(false);  //supongo que oculta el formulario AltaMesa (preconfigurado al desarrollar el método jButtonAltaMesaAceptarActionPerformed
+        }
+         */
     }//GEN-LAST:event_jButtonAltaMesaAceptarActionPerformed
 
 
@@ -118,5 +165,6 @@ public class AltaMesa extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldCapacidad;
     private javax.swing.JTextField jTextFieldIdentificador;
     private javax.swing.JTextField jTextFieldLocalizacion;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanelAltaMesa;
     // End of variables declaration//GEN-END:variables
 }
