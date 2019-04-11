@@ -5,9 +5,11 @@
  */
 package gui;
 
+import dto.Mesa;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import logica.LogicaNegocio;
 import org.netbeans.validation.api.builtin.stringvalidation.MayusculaValidator;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
@@ -19,13 +21,16 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 public class AltaMesa extends javax.swing.JDialog {
     
     private GestionMesas gestionMesas;
+    
+    private LogicaNegocio logicaNegocio;
 
     /**
      * Creates new form AltaMesa
      */
-    public AltaMesa(java.awt.Dialog parent, boolean modal) {
+    public AltaMesa(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         gestionMesas = (GestionMesas) parent;
+        this.logicaNegocio = logicaNegocio;
         initComponents();
         
         jButtonAltaMesaAceptar.setEnabled(false);
@@ -153,6 +158,13 @@ public class AltaMesa extends javax.swing.JDialog {
         setVisible(false);  //supongo que oculta el formulario AltaMesa (preconfigurado al desarrollar el método jButtonAltaMesaAceptarActionPerformed
         }
          */
+        Mesa mesa = new Mesa(Integer.parseInt(jTextFieldIdentificador.getText()),
+        jTextFieldLocalizacion.getText(),
+        Integer.parseInt(jTextFieldCapacidad.getText()));
+        logicaNegocio.altaMesa(mesa);
+        //gestionMesas.anhadirMesa(mesa);   // si utilizamos DefaultTableModel
+        //setVisible(false);    // oculta el formulario (pero no lo destruye)
+        dispose();              // destruye el formulario
     }//GEN-LAST:event_jButtonAltaMesaAceptarActionPerformed
 
 

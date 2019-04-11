@@ -20,8 +20,6 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 public class AltaProducto extends javax.swing.JDialog {
 
     private GestionCarta gestionCarta;
-
-    List <String> listaCategorias = new ArrayList<String>();
     
     /**
      * Creates new form AltaProducto
@@ -40,7 +38,7 @@ public class AltaProducto extends javax.swing.JDialog {
         group.add(jTextFieldPrecio, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_NUMBER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
         // NOT_A_NUMBER, ERR_NEGATIVE_NUMBER en Bundle_es.properties
         // NOTA: jComboBoxCategoria no se evalúa (ningún ComboBox)
-        // TODO ¿Mejorar inserción componentes del jComboBox (a mano)?
+        // TODO ¿Mejorar inserción componentes del jComboBox (actualmente hecho a mano)?
                 
         validationPanelAltaProducto.addChangeListener(new ChangeListener() {
             @Override

@@ -47,6 +47,16 @@ public class Mesa implements Serializable {
         this.capacidad = capacidad;
     }
 
+    // Método para crear array de strings con los datos del objeto mesa para ser
+    // añadidos en una nueva fila de una DefaultTableModel
+    public String[] toArrayString() {
+        String[] s = new String[2];
+        s[0] = Integer.toString(idMesa);
+        s[1] = localizacion;
+        s[2] = Integer.toString(capacidad);
+        return s;
+    }
+
     @Override
     public String toString() {
         return "Mesa{" + "idMesa=" + idMesa + ", localizacion=" + localizacion + ", capacidad=" + capacidad + '}';

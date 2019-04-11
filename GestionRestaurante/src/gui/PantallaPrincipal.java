@@ -53,6 +53,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelListaTicket = new javax.swing.JLabel();
         jScrollPaneProductosTicket = new javax.swing.JScrollPane();
         jTableProductosTicket = new javax.swing.JTable();
+        jMenuBarPantallaPrincipal = new javax.swing.JMenuBar();
+        jMenuMesas = new javax.swing.JMenu();
+        jMenuItemGestionMesas = new javax.swing.JMenuItem();
+        jMenuItemAltaMesa = new javax.swing.JMenuItem();
+        jMenuCarta = new javax.swing.JMenu();
+        jMenuItemGestionCarta = new javax.swing.JMenuItem();
+        jMenuItemAltaProducto = new javax.swing.JMenuItem();
+        jMenuTickets = new javax.swing.JMenu();
+        jMenuItemAperturaTicket = new javax.swing.JMenuItem();
+        jMenuFiltrar = new javax.swing.JMenu();
+        jMenuItemFiltrarFecha = new javax.swing.JMenuItem();
+        jMenuItemFiltrarMesa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +110,60 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPaneProductosTicket.setViewportView(jTableProductosTicket);
 
+        jMenuMesas.setText("Mesas");
+
+        jMenuItemGestionMesas.setText("Gestión ...");
+        jMenuItemGestionMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGestionMesasActionPerformed(evt);
+            }
+        });
+        jMenuMesas.add(jMenuItemGestionMesas);
+
+        jMenuItemAltaMesa.setText("Alta ...");
+        jMenuMesas.add(jMenuItemAltaMesa);
+
+        jMenuBarPantallaPrincipal.add(jMenuMesas);
+
+        jMenuCarta.setText("Carta");
+
+        jMenuItemGestionCarta.setText("Gestión ..");
+        jMenuItemGestionCarta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGestionCartaActionPerformed(evt);
+            }
+        });
+        jMenuCarta.add(jMenuItemGestionCarta);
+
+        jMenuItemAltaProducto.setText("Alta ...");
+        jMenuCarta.add(jMenuItemAltaProducto);
+
+        jMenuBarPantallaPrincipal.add(jMenuCarta);
+
+        jMenuTickets.setText("Tickets");
+
+        jMenuItemAperturaTicket.setText("Apertura ...");
+        jMenuItemAperturaTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAperturaTicketActionPerformed(evt);
+            }
+        });
+        jMenuTickets.add(jMenuItemAperturaTicket);
+
+        jMenuFiltrar.setText("Filtrar ...");
+
+        jMenuItemFiltrarFecha.setText("Por fecha");
+        jMenuFiltrar.add(jMenuItemFiltrarFecha);
+
+        jMenuItemFiltrarMesa.setText("Por mesa");
+        jMenuFiltrar.add(jMenuItemFiltrarMesa);
+
+        jMenuTickets.add(jMenuFiltrar);
+
+        jMenuBarPantallaPrincipal.add(jMenuTickets);
+
+        setJMenuBar(jMenuBarPantallaPrincipal);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,7 +206,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                         .addComponent(jButtonFiltrarTicketMesa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonFiltrarTicketFecha)
-                        .addContainerGap(56, Short.MAX_VALUE))
+                        .addContainerGap(35, Short.MAX_VALUE))
                     .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
@@ -162,6 +228,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         AperturaTicket aperturaTicket = new AperturaTicket(this, true);
         aperturaTicket.setVisible(true);
     }//GEN-LAST:event_jButtonAperturaTicketActionPerformed
+
+    private void jMenuItemGestionMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGestionMesasActionPerformed
+        GestionMesas gestionMesas = new GestionMesas(this, true, logicaNegocio);
+        gestionMesas.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGestionMesasActionPerformed
+
+    private void jMenuItemGestionCartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGestionCartaActionPerformed
+        GestionCarta gestionCarta = new GestionCarta(this, true, logicaNegocio);
+        gestionCarta.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGestionCartaActionPerformed
+
+    private void jMenuItemAperturaTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAperturaTicketActionPerformed
+        AperturaTicket aperturaTicket = new AperturaTicket(this, true);
+        aperturaTicket.setVisible(true);
+    }//GEN-LAST:event_jMenuItemAperturaTicketActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,6 +288,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGestionMesas;
     private javax.swing.JLabel jLabelGestionRestaurante;
     private javax.swing.JLabel jLabelListaTicket;
+    private javax.swing.JMenuBar jMenuBarPantallaPrincipal;
+    private javax.swing.JMenu jMenuCarta;
+    private javax.swing.JMenu jMenuFiltrar;
+    private javax.swing.JMenuItem jMenuItemAltaMesa;
+    private javax.swing.JMenuItem jMenuItemAltaProducto;
+    private javax.swing.JMenuItem jMenuItemAperturaTicket;
+    private javax.swing.JMenuItem jMenuItemFiltrarFecha;
+    private javax.swing.JMenuItem jMenuItemFiltrarMesa;
+    private javax.swing.JMenuItem jMenuItemGestionCarta;
+    private javax.swing.JMenuItem jMenuItemGestionMesas;
+    private javax.swing.JMenu jMenuMesas;
+    private javax.swing.JMenu jMenuTickets;
     private javax.swing.JScrollPane jScrollPaneProductosTicket;
     private javax.swing.JTable jTableProductosTicket;
     // End of variables declaration//GEN-END:variables

@@ -5,7 +5,6 @@
  */
 package logica;
 
-import com.opencsv.CSVReader;
 import dto.Mesa;
 import dto.Producto;
 import dto.Producto.Categorias;
@@ -13,21 +12,15 @@ import dto.ProductoTicket;
 import dto.Ticket;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -62,8 +55,8 @@ public class LogicaNegocio {
                 int idMesa = Integer.parseInt(datos[0]);    // borra el 0 inicial del identificador de la mesa ya que al parsear no existe ninǵun entero que empiece por 0   
                 String localizacion = datos[1].trim();      // trim: método que elimina los caracteres blancos iniciales y finales de la cadena, devolviendo una copia de la misma
                 int capacidad = Integer.parseInt(datos[2]);
-                Mesa m = new Mesa(idMesa, localizacion, capacidad);
-                listaMesas.add(m);
+                Mesa mesa = new Mesa(idMesa, localizacion, capacidad);
+                listaMesas.add(mesa);
 
             }
             //System.out.println(listaMesas);       //comprobación en consola
@@ -78,15 +71,27 @@ public class LogicaNegocio {
     public List<Mesa> getListaMesas() {
         return listaMesas;
     }
+    
+    public void altaMesa(Mesa mesa) {
+        listaMesas.add(mesa);
+        //comprobación por consola
+        System.out.println("Mesa añadida con éxito.");
+        for (int i = 0; i < listaMesas.size(); i++) {
+            System.out.println(listaMesas.get(i));
+        }
+        // TODO persistencia mesas añadidas y mostrar en tabla
+    }
 
     public void leerArchivoProductosCarta() {
 
         File fichero = new File("productos.csv");
 
-        try {
-            FileReader fr = new FileReader(fichero);
+        FileReader fr = null;
+        BufferedReader br = null;
 
-            BufferedReader br = new BufferedReader(fr);
+        try {
+            fr = new FileReader(fichero);
+            br = new BufferedReader(fr);
 
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -114,8 +119,8 @@ public class LogicaNegocio {
                     Categorias.valueOf("OTROS");
                 }
                  */
-                Producto p = new Producto(nombre, precio, Categorias.valueOf(categoria));
-                listaProductosCarta.add(p);
+                Producto producto = new Producto(nombre, precio, Categorias.valueOf(categoria));
+                listaProductosCarta.add(producto);
 
             }
             //System.out.println(listaMesas);
@@ -123,8 +128,24 @@ public class LogicaNegocio {
             System.out.println("No se puede leer el archivo");
         } catch (IOException ex) {
             System.out.println("Error al leer la linea");
+        // NOTA: cerrar buffers en un finally
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException ioe) {
+                    System.out.println("Error de escritura.");
+                }
+            }
+            if (fr != null) {
+                try {
+                    fr.close();
+                } catch (IOException ioe) {
+                    System.out.println("Error de escritura.");
+                }
+            }
         }
-        // TODO cerrar buffers en un finally
+
     }
 
     public List<Producto> getListaProductosCarta() {
