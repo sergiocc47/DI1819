@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.netbeans.validation.api.builtin.stringvalidation.MayusculaValidator;
@@ -19,6 +21,8 @@ public class AltaProducto extends javax.swing.JDialog {
 
     private GestionCarta gestionCarta;
 
+    List <String> listaCategorias = new ArrayList<String>();
+    
     /**
      * Creates new form AltaProducto
      */
@@ -27,14 +31,17 @@ public class AltaProducto extends javax.swing.JDialog {
         gestionCarta = (GestionCarta) parent;
         initComponents();
         
+        
+        
         jButtonAltaProductoAceptar.setEnabled(false);
         ValidationGroup group = validationPanelAltaProducto.getValidationGroup();
         // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
         group.add(jTextFieldPrecio, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_NUMBER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
         // NOT_A_NUMBER, ERR_NEGATIVE_NUMBER en Bundle_es.properties
-        // TODO validación jComboBoxCategoria
-        
+        // NOTA: jComboBoxCategoria no se evalúa (ningún ComboBox)
+        // TODO ¿Mejorar inserción componentes del jComboBox (a mano)?
+                
         validationPanelAltaProducto.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -78,7 +85,11 @@ public class AltaProducto extends javax.swing.JDialog {
 
         jLabelCategoria.setText("Categoría");
 
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jTextFieldNombre.setName("Nombre"); // NOI18N
+
+        jTextFieldPrecio.setName("Precio"); // NOI18N
+
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BEBIDAS", "PRIMER_PLATO", "SEGUNDO_PLATO", "POSTRE", "OTROS" }));
 
         jButtonAltaProductoAceptar.setText("Aceptar");
         jButtonAltaProductoAceptar.addActionListener(new java.awt.event.ActionListener() {

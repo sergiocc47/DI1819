@@ -5,7 +5,7 @@
  */
 package gui.tablemodels;
 
-import dto.Mesa;
+import dto.Producto;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,20 +13,20 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author sergio
  */
-public class TableModelMesas extends AbstractTableModel {
+public class TableModelProductosCarta extends AbstractTableModel {
 
-    private final List<Mesa> listaMesas;
-    private final String[] columnas = {"Identificador mesa", "Localización", "Capacidad"};
+    private final List<Producto> listaProductos;
+    private final String[] columnas = {"Nombre", "Precio", "Categoría"};
 
-    public TableModelMesas(List<Mesa> listaMesas) {
-        this.listaMesas = listaMesas;
+    public TableModelProductosCarta(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
     }
 
     // Devuelve el número de filas que tendrá nuestra tabla. Depende del
     // tamaño de la lista
     @Override
     public int getRowCount() {
-        return listaMesas.size();
+        return listaProductos.size();
     }
 
     // Devuelve el número de columnas
@@ -48,11 +48,11 @@ public class TableModelMesas extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return listaMesas.get(rowIndex).getIdMesa();
+                return listaProductos.get(rowIndex).getNombre();
             case 1:
-                return listaMesas.get(rowIndex).getLocalizacion();
+                return listaProductos.get(rowIndex).getPrecio();
             case 2:
-                return listaMesas.get(rowIndex).getCapacidad();
+                return listaProductos.get(rowIndex).getCategoria();
         }
         return null;
     }

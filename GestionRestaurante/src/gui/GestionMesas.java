@@ -25,44 +25,46 @@ public class GestionMesas extends javax.swing.JDialog {
 
     private LogicaNegocio logicaNegocio;
 
-    //Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
-    //de filtrar
+    // Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
+    // de filtrar
     private TableRowSorter<TableModelMesas> sorter;
 
     /**
      * Creates new form GestionMesas
      */
-    public GestionMesas(java.awt.Frame parent, boolean modal) {
+    // Hay que añadir 'LogicaNegocio logicaNegocio' a los parámetros del constructor y 'this.logicaNegocio = logicaNegocio;' dentro del método 
+    public GestionMesas(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         pantallaPrincipal = (PantallaPrincipal) parent;
         this.logicaNegocio = logicaNegocio;
         initComponents();
-        //jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));     // TODO rellenar con listaMesas 
+        rellenarTablaMesas();
+
+        //jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));     // NOTA: rellena la tabla con listaMesas pero no tiene sorter
     }
-    
-    //Utilizando un AbstractTableModel
-    private void rellenarTablaMesas()
-    {
+
+    // Utilizando un AbstractTableModel
+    private void rellenarTablaMesas() {
         TableModelMesas tmm = new TableModelMesas(logicaNegocio.getListaMesas());
         jTableMesas.setModel(tmm);
-        
-        //Añadimos la funcionalidad de ordenar
+
+        // Añadimos la funcionalidad de ordenar
         sorter = new TableRowSorter<>(tmm);
         jTableMesas.setRowSorter(sorter);
-        
-        //Establecemos el orden por defecto
+
+        // Establecemos el orden por defecto
         List<SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new SortKey(0,SortOrder.DESCENDING));
+        sortKeys.add(new SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-        
+
     }
-    
-    private void rellenarTablaMesas2()
-    {
-        String[] columnas = {"Nombre","Curso"};
-        DefaultTableModel dtm = new DefaultTableModel(columnas,0);
-        for (Mesa mesa : logicaNegocio.getListaMesas())
-        {
+
+    // Utiliza  DefaultTableModel en vez de nuestro TableModel (no tiene el sorter para ordenar)
+    private void rellenarTablaMesas2() {
+        String[] columnas = {"Nombre", "Curso"};
+        DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
+        for (Mesa mesa : logicaNegocio.getListaMesas()) {
+            // Creación del String en una línea
             //String[] a = new String[]{Integer.toString(mesa.getIdMesa()),
             //                          mesa.getLocalizacion(),
             //                          Integer.toString(mesa.getCapacidad())};
@@ -73,7 +75,7 @@ public class GestionMesas extends javax.swing.JDialog {
             dtm.addRow(m);
         }
         jTableMesas.setModel(dtm);
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

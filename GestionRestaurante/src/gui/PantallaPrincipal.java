@@ -147,13 +147,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // TODO Cambiar tanto botón por un barra de menú
     private void jButtonGestionMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGestionMesasActionPerformed
-        GestionMesas gestionMesas = new GestionMesas(this, true);
+        GestionMesas gestionMesas = new GestionMesas(this, true, logicaNegocio);
         gestionMesas.setVisible(true);
     }//GEN-LAST:event_jButtonGestionMesasActionPerformed
 
     private void jButtonGestionCartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGestionCartaActionPerformed
-        GestionCarta gestionCarta = new GestionCarta(this, true);
+        GestionCarta gestionCarta = new GestionCarta(this, true, logicaNegocio);
         gestionCarta.setVisible(true);
     }//GEN-LAST:event_jButtonGestionCartaActionPerformed
 

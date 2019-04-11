@@ -5,6 +5,14 @@
  */
 package gui;
 
+import gui.tablemodels.TableModelProductosCarta;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import logica.LogicaNegocio;
+
 /**
  *
  * @author sergio
@@ -13,13 +21,38 @@ public class GestionCarta extends javax.swing.JDialog {
 
     private PantallaPrincipal pantallaPrincipal;
 
+    private LogicaNegocio logicaNegocio;
+
+    // Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
+    // de filtrar
+    private TableRowSorter<TableModelProductosCarta> sorter;
+
     /**
      * Creates new form GestionInventario
      */
-    public GestionCarta(java.awt.Frame parent, boolean modal) {
+    public GestionCarta(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         pantallaPrincipal = (PantallaPrincipal) parent;
+        this.logicaNegocio = logicaNegocio;
         initComponents();
+        rellenarTablaProductos();
+
+    }
+
+    // Utilizando un AbstractTableModel
+    private void rellenarTablaProductos() {
+        TableModelProductosCarta tmp = new TableModelProductosCarta(logicaNegocio.getListaProductosCarta());
+        jTableProductosCarta.setModel(tmp);
+
+        // Añadimos la funcionalidad de ordenar
+        sorter = new TableRowSorter<>(tmp);
+        jTableProductosCarta.setRowSorter(sorter);
+
+        // Establecemos el orden por defecto
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));    //EXTRA Ordenar, por ej., según las categorías en el orden de la Enum
+        sorter.setSortKeys(sortKeys);
+
     }
 
     /**

@@ -8,6 +8,7 @@ package logica;
 import com.opencsv.CSVReader;
 import dto.Mesa;
 import dto.Producto;
+import dto.Producto.Categorias;
 import dto.ProductoTicket;
 import dto.Ticket;
 import java.io.BufferedReader;
@@ -34,17 +35,100 @@ import java.util.logging.Logger;
  */
 public class LogicaNegocio {
 
-    private final String FICHERO_MESAS = "mesas.csv";
-    private final String FICHERO_PRODUCTOS = "productos.csv";
+    //private final String FICHERO_MESAS = "mesas.csv";             //usados en métodos
+    //private final String FICHERO_PRODUCTOS_CARTA = "productos.csv";     //cargarArchivo
     private List<Ticket> listaTickets;
     private List<Mesa> listaMesas = new LinkedList<>();
-    private List<Producto> listaProductos = new LinkedList<>();
+    private List<Producto> listaProductosCarta = new LinkedList<>();
 
     public LogicaNegocio() {
-        //cargarFicheroProductos();
-        cargarFicheroMesas();
-        //cargarCSVMesas();
-        //leerArchivoMesas();
+        leerArchivoMesas();
+        leerArchivoProductosCarta();
+    }
+
+    // Extraído de proyecto Ficheros_Completo
+    public void leerArchivoMesas() {
+
+        File fichero = new File("mesas.csv");
+
+        try {
+            FileReader fr = new FileReader(fichero);
+
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                int idMesa = Integer.parseInt(datos[0]);    // borra el 0 inicial del identificador de la mesa ya que al parsear no existe ninǵun entero que empiece por 0   
+                String localizacion = datos[1].trim();      // trim: método que elimina los caracteres blancos iniciales y finales de la cadena, devolviendo una copia de la misma
+                int capacidad = Integer.parseInt(datos[2]);
+                Mesa m = new Mesa(idMesa, localizacion, capacidad);
+                listaMesas.add(m);
+
+            }
+            //System.out.println(listaMesas);       //comprobación en consola
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se puede leer el archivo");
+        } catch (IOException ex) {
+            System.out.println("Error al leer la linea");
+        }
+        // TODO cerrar buffers en un finally
+    }
+
+    public List<Mesa> getListaMesas() {
+        return listaMesas;
+    }
+
+    public void leerArchivoProductosCarta() {
+
+        File fichero = new File("productos.csv");
+
+        try {
+            FileReader fr = new FileReader(fichero);
+
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+
+                String[] datos = linea.split(",");
+                String nombre = datos[0].trim();
+                float precio = Float.parseFloat(datos[1]);    // borra el 0 inicial del identificador de la mesa ya que al parsear no existe ninǵun entero que empiece por 0   
+
+                String categoria = datos[2].trim();
+                /*
+                // TODO Parece innecesario para recoger datos de Enum Categorias
+                if (categoria == "BEBIDAS"){
+                    Categorias.valueOf("BEBIDAS");
+                }
+                if (categoria == "PRIMER_PLATO"){
+                    Categorias.valueOf("PRIMER_PLATO");
+                }
+                if (categoria == "SEGUNDO_PLATO"){
+                    Categorias.valueOf("SEGUNDO_PLATO");
+                }
+                if (categoria == "POSTRE"){
+                    Categorias.valueOf("POSTRE");
+                }
+                if (categoria == "OTROS"){
+                    Categorias.valueOf("OTROS");
+                }
+                 */
+                Producto p = new Producto(nombre, precio, Categorias.valueOf(categoria));
+                listaProductosCarta.add(p);
+
+            }
+            //System.out.println(listaMesas);
+        } catch (FileNotFoundException ex) {
+            System.out.println("No se puede leer el archivo");
+        } catch (IOException ex) {
+            System.out.println("Error al leer la linea");
+        }
+        // TODO cerrar buffers en un finally
+    }
+
+    public List<Producto> getListaProductosCarta() {
+        return listaProductosCarta;
     }
 
     public void altaTicket(Ticket ticket) {
@@ -118,147 +202,6 @@ public class LogicaNegocio {
 
     public void borrarTicket(Ticket ticket) {
         listaTickets.remove(ticket);
-    }
-
-    // TODO fallo NullPointerException
-    private void cargarFicheroProductos() {
-        File file = new File(FICHERO_PRODUCTOS);
-        if (file.exists()) {
-            FileInputStream fis = null;
-            ObjectInputStream ois = null;
-            LinkedList<Producto> llp = null;
-
-            try {
-
-                fis = new FileInputStream(FICHERO_PRODUCTOS);
-                ois = new ObjectInputStream(fis);
-                llp = (LinkedList<Producto>) ois.readObject();
-                listaProductos = llp;
-
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
-                //System.out.println("No se puede leer el archivo");
-            } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                //System.out.println("Error al leer la linea");
-            } finally {
-                try {
-                    ois.close();
-                    fis.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ObjectInput.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
-    public List<Producto> getListaProductos() {
-        return listaProductos;
-    }
-
-    // TODO fallo NullPointerException
-    private void cargarFicheroMesas() {
-        File file = new File(FICHERO_MESAS);
-        if (file.exists()) {
-            FileInputStream fis = null;
-            ObjectInputStream ois = null;
-            LinkedList<Mesa> llm = null;
-
-            try {
-
-                fis = new FileInputStream(FICHERO_MESAS);
-                ois = new ObjectInputStream(fis);
-                llm = (LinkedList<Mesa>) ois.readObject();
-                listaMesas = llm;
-
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (ClassNotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                try {
-                    if (ois!=null) ois.close();
-                    if (fis!=null) fis.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ObjectInput.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
-    public List<Mesa> getListaMesas() {
-        return listaMesas;
-    }
-
-    // TODO 
-    public void cargarCSVMesas() throws IOException {   //throws IOException añadido bombilla
-        try {
-            CSVReader reader = new CSVReader(new FileReader("mesas.csv"), ',');
-            String[] nextLine;
-            List<Mesa> listaMesas = new ArrayList<Mesa>();
-            reader.readNext();
-            while ((nextLine = reader.readNext()) != null) {
-
-                int idMesa = Integer.parseInt(nextLine[0]);
-                String localizacion = nextLine[1];
-                int capacidad = Integer.parseInt(nextLine[2]);
-                /*
-                int idMesa = -1;        // damos un valor que no sea coherente para este atributo y luego lo controlo con un if (ej. media, si no hay valor que no lo contabilice para su cálculo)
-                if (!"".equals(nextLine[0])) {
-                    idMesa = Integer.parseInt(nextLine[0]);
-                }
-                
-                
-                String localizacion = null;
-                if (!"".equals(nextLine[1])) {
-                    localizacion = nextLine[1];
-                }
-                
-
-                int capacidad = -1;
-                if (!"".equals(nextLine[2])) {
-                    capacidad = Integer.parseInt(nextLine[2]);
-                }
-                 */
-                listaMesas.add(new Mesa(idMesa, localizacion, capacidad));
-            }
-            System.out.println(listaMesas);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(LogicaNegocio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    // Extraído de proyecto Ficheros_Completo
-    public void leerArchivoMesas() {
-
-        File fichero = new File("mesas.csv");
-
-        try {
-            FileReader fr = new FileReader(fichero);
-
-            BufferedReader br = new BufferedReader(fr);
-
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] datos = linea.split(",");
-                int idMesa = Integer.parseInt(datos[0]);    //borra el 0 inicial del identificador de la mesa ya que al parsear no existe ninǵun entero que empiece por 0   
-                String localizacion = datos[1].trim();      //trim: método que elimina los caracteres blancos iniciales y finales de la cadena, devolviendo una copia de la misma
-                int capacidad = Integer.parseInt(datos[2]);
-                Mesa m = new Mesa(idMesa, localizacion, capacidad);
-                listaMesas.add(m);
-
-            }
-            //System.out.println(listaMesas);
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se puede leer el archivo");
-        } catch (IOException ex) {
-            System.out.println("Error al leer la linea");;
-        }
-        // TODO cerrar buffers en un finally
     }
 
 }

@@ -17,9 +17,13 @@ public class Producto implements Serializable {
     private float precio;
     private Categorias categoria;   //si no nos queremos complicar con la enumeración podemos utilizar un String
 
+    public Producto(String nombre, int precio, String categoria) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public enum Categorias {
         BEBIDAS, PRIMER_PLATO, SEGUNDO_PLATO, POSTRE, OTROS
-    };   //más correcto: enumeración que debería meterse como una inner class
+    };  //más correcto: enumeración que debería meterse como una inner class
 
     public Producto(String nombre, float precio, Categorias categoria) {
         this.nombre = nombre;
