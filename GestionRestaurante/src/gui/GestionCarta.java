@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
+import dto.Producto;
 import gui.tablemodels.TableModelProductosCarta;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
@@ -20,8 +18,8 @@ import logica.LogicaNegocio;
 public class GestionCarta extends javax.swing.JDialog {
 
     private PantallaPrincipal pantallaPrincipal;
-
     private LogicaNegocio logicaNegocio;
+    private Producto productoModificar;
 
     // Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
     // de filtrar
@@ -35,24 +33,29 @@ public class GestionCarta extends javax.swing.JDialog {
         pantallaPrincipal = (PantallaPrincipal) parent;
         this.logicaNegocio = logicaNegocio;
         initComponents();
-        rellenarTablaProductos();
+        setLocationRelativeTo(null);
+        setTitle("GESTIÓN CARTA");
+
+        Collections.sort(logicaNegocio.getListaProductosCarta());   // TODO: ¿Redundante si ya lo hemos hecho en otros métodos?
+        rellenarTablaProductosCarta();
 
     }
 
     // Utilizando un AbstractTableModel
-    private void rellenarTablaProductos() {
-        TableModelProductosCarta tmp = new TableModelProductosCarta(logicaNegocio.getListaProductosCarta());
-        jTableProductosCarta.setModel(tmp);
-
+    private void rellenarTablaProductosCarta() {
+        TableModelProductosCarta tmpc = new TableModelProductosCarta(logicaNegocio.getListaProductosCarta());
+        jTableProductosCarta.setModel(tmpc);
+        /*
+        // TODO: Eliminar si todo funciona correctamente
         // Añadimos la funcionalidad de ordenar
-        sorter = new TableRowSorter<>(tmp);
-        jTableProductosCarta.setRowSorter(sorter);
+        sorter = new TableRowSorter<>(tmpc);            // TODO: Eliminar para que no de error
+        jTableProductosCarta.setRowSorter(sorter);      // al seleccionar un item tras ordenar
 
         // Establecemos el orden por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));    //EXTRA Ordenar, por ej., según las categorías en el orden de la Enum
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-
+         */
     }
 
     /**
@@ -90,6 +93,11 @@ public class GestionCarta extends javax.swing.JDialog {
         });
 
         jButtonEliminarProductoCarta.setText("Eliminar producto");
+        jButtonEliminarProductoCarta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarProductoCartaActionPerformed(evt);
+            }
+        });
 
         jTableProductosCarta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,14 +150,73 @@ public class GestionCarta extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnhadirProductoCartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirProductoCartaActionPerformed
-        AltaProducto altaProducto = new AltaProducto(this, true);
-        altaProducto.setVisible(true);
+
+        AltaProducto dialogoAltaProducto = new AltaProducto(this, true, logicaNegocio);
+        dialogoAltaProducto.setLocationRelativeTo(null);
+        dialogoAltaProducto.setVisible(true);
+        // El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
+        Collections.sort(logicaNegocio.getListaProductosCarta());    // ordenamos la lista
+        rellenarTablaProductosCarta();   // actualiza la tabla añadiendo y mostrando la nueva mesa
+        // ERROR: Sobra diálogo para mostrar mensaje de confirmación al añadir una mesa
+        //JOptionPane.showMessageDialog(this, "Mesa añadida con éxito", "ALTA MESA", JOptionPane.INFORMATION_MESSAGE);
+
+        // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+        // Creación del CSV
+        //gf.escribirArchivo();
+        // Lee el List con la nueva información (Productos añadidos)
+        //gf.leerArchivo();
+        logicaNegocio.listarProductosCarta();  // comprobación consola
     }//GEN-LAST:event_jButtonAnhadirProductoCartaActionPerformed
 
     private void jButtonModificarProductoCartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarProductoCartaActionPerformed
-        AltaProducto altaProducto = new AltaProducto(this, true);
-        altaProducto.setVisible(true);
+        
+        // obtenemos la posición real con respecto a la ordenación
+        //int seleccionado = jTableProductosCarta.convertColumnIndexToModel(jTableProductosCarta.getSelectedRow());   // teniendo en cuenta que se ha utilizado el sorter (necesita más código)
+        int seleccionado = jTableProductosCarta.getSelectedRow();        // no es válido en caso de usar sorter
+        if (jTableProductosCarta.getSelectedRow() != -1) {
+            Producto productoSeleccionado = logicaNegocio.getListaProductosCarta().get(seleccionado);
+            AltaProducto dialogoModificarProducto = new AltaProducto(this, true, logicaNegocio, productoSeleccionado);
+            dialogoModificarProducto.setLocationRelativeTo(null);
+            dialogoModificarProducto.setVisible(true);
+            // El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
+            Collections.sort(logicaNegocio.getListaProductosCarta());    // ordenamos la lista
+            rellenarTablaProductosCarta();
+            // Diálogo para mostrar mensaje de confirmación al añadir Producto
+            //JOptionPane.showMessageDialog(this, "Producto modificado con éxito", "MODIFICACIÓN PRODUCTO", JOptionPane.INFORMATION_MESSAGE);
+
+            // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+            // Creación del CSV
+            //gf.escribirArchivo();
+            // Lee el List con la nueva información (Productos añadidos)
+            //gf.leerArchivo();
+            logicaNegocio.listarProductosCarta();  // comprobación consola
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto de la tabla.", "ADVERTENCIA MODIFICACIÓN PRODUCTO", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_jButtonModificarProductoCartaActionPerformed
+
+    private void jButtonEliminarProductoCartaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProductoCartaActionPerformed
+        int seleccionado = jTableProductosCarta.getSelectedRow();        // no es válido en caso de haber oredenado la tabla mediante sorter
+        if (jTableProductosCarta.getSelectedRow() != -1) {
+            Producto productoSeleccionado = logicaNegocio.getListaProductosCarta().get(seleccionado);
+            logicaNegocio.getListaProductosCarta().remove(productoSeleccionado);
+            Collections.sort(logicaNegocio.getListaProductosCarta());    // ordenamos la lista
+            rellenarTablaProductosCarta();   // actualiza la tabla añadiendo y mostrando el nuevo producto
+            //Diálogo para mostrar mensaje de confirmación al añadir corredor.
+            JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "ELIMINACIÓN PRODUCTO", JOptionPane.INFORMATION_MESSAGE);
+
+            // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+            // Creación del CSV
+            //gf.escribirArchivo();
+            // Lee el List con la nueva información (productos añadidos)
+            //gf.leerArchivo();
+            logicaNegocio.listarProductosCarta();  // comprobación consola
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto de la tabla.", "ADVERTENCIA ELIMINACIÓN PRODUCTO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonEliminarProductoCartaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

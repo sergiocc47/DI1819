@@ -11,7 +11,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemGestionMesas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n ..."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemGestionMesasActionPerformed"/>
@@ -19,8 +19,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAltaMesa">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alta ..."/>
+                <Property name="text" type="java.lang.String" value="Alta..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAltaMesaActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -31,7 +34,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemGestionCarta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n .."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemGestionCartaActionPerformed"/>
@@ -39,8 +42,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAltaProducto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Alta ..."/>
+                <Property name="text" type="java.lang.String" value="Alta..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAltaProductoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -51,26 +57,32 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAperturaTicket">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Apertura ..."/>
+                <Property name="text" type="java.lang.String" value="Apertura..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAperturaTicketActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenuFiltrar">
+            <Menu class="javax.swing.JMenu" name="jMenuFiltrado">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Filtrar ..."/>
+                <Property name="text" type="java.lang.String" value="Filtrado..."/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemFiltrarFecha">
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemFiltradoTicketsFecha">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Por fecha"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemFiltradoTicketsFechaActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemFiltrarMesa">
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemFiltradoTicketsMesa">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Por mesa"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemFiltradoTicketsMesaActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -102,28 +114,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButtonFiltrarTicketMesa" max="32767" attributes="0"/>
-                  <Component id="jButtonFiltrarTicketFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonAperturaTicket" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButtonGestionCarta" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButtonGestionMesas" alignment="1" max="32767" attributes="0"/>
-              </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace pref="221" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelGestionRestaurante" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPaneProductosTicket" alignment="0" min="-2" pref="375" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="jLabelGestionRestaurante" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
                       <Component id="jLabelListaTicket" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jButtonFiltradoTicketsFecha" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButtonReaperturaTicket" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButtonFiltradoTicketsMesa" max="32767" attributes="0"/>
+                      <Component id="jButtonAperturaTicket" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jButtonVisualizacionTicket" min="-2" pref="155" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPaneTickets" pref="0" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -134,23 +148,22 @@
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="jLabelGestionRestaurante" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonGestionMesas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelListaTicket" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="jLabelListaTicket" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPaneTickets" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jButtonGestionCarta" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonVisualizacionTicket" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButtonAperturaTicket" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonFiltrarTicketMesa" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonReaperturaTicket" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonFiltrarTicketFecha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                      <Component id="jButtonFiltradoTicketsFecha" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonFiltradoTicketsMesa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPaneProductosTicket" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -162,20 +175,12 @@
         <Property name="text" type="java.lang.String" value="GESTI&#xd3;N RESTAURANTE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonGestionMesas">
+    <Component class="javax.swing.JButton" name="jButtonVisualizacionTicket">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Gesti&#xf3;n mesas"/>
+        <Property name="text" type="java.lang.String" value="Ver ticket"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGestionMesasActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonGestionCarta">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Gesti&#xf3;n carta"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGestionCartaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVisualizacionTicketActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAperturaTicket">
@@ -186,29 +191,43 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAperturaTicketActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonFiltrarTicketFecha">
+    <Component class="javax.swing.JButton" name="jButtonReaperturaTicket">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Filtrar ticket (mesa)"/>
+        <Property name="text" type="java.lang.String" value="Reapertura ticket"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonReaperturaTicketActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonFiltrarTicketMesa">
+    <Component class="javax.swing.JButton" name="jButtonFiltradoTicketsFecha">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Filtrar ticket (fecha)"/>
+        <Property name="text" type="java.lang.String" value="Filtrar por fecha"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFiltradoTicketsFechaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonFiltradoTicketsMesa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Filtrar por mesa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFiltradoTicketsMesaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelListaTicket">
       <Properties>
         <Property name="text" type="java.lang.String" value="LISTA TICKETS"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPaneProductosTicket">
+    <Container class="javax.swing.JScrollPane" name="jScrollPaneTickets">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTableProductosTicket">
+        <Component class="javax.swing.JTable" name="jTableTickets">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">

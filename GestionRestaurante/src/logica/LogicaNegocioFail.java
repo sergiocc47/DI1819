@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logica;
 
 import com.opencsv.CSVReader;
@@ -164,7 +159,7 @@ public class LogicaNegocioFail {
     public void altaTicket(Ticket ticket) {
         listaTickets.add(ticket);
     }
-
+    /*
     // TODO Incompleto, adaptar en caso de pedir alta por pantalla
     public void altaTicket2() {
 
@@ -196,7 +191,7 @@ public class LogicaNegocioFail {
         System.out.println("Introduzca el identificador de la mesa");
         idMesa = sc.nextInt();
 
-        /*
+        
         System.out.println("CATEGORIAS A ELEGIR:\n1- BEBIDAS, \n2- PRIMER_PLATO, \n3- SEGUNDO_PLATO, \n4- POSTRE, \n5- OTROS");
         System.out.println("Introduce la Categoría: ");
         numCategoria = Integer.parseInt(sc.nextLine());
@@ -218,12 +213,12 @@ public class LogicaNegocioFail {
                 categoria = Producto.Categorias.OTROS;
                 break;
         }
-         */
+         
         //TODO ¿Mesa como clase o sólo idMesa?
         //Ticket ticket = new Ticket(numeroTicket, fecha, estado, mesaTicket, listaProductosTicket);
         //listaTickets.add(ticket);
     }
-
+    */
     public void mostrarListaTickets() {
         for (Ticket ticket : listaTickets) {
             System.out.println(ticket);

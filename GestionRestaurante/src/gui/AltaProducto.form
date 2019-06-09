@@ -113,17 +113,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxCategoria">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="BEBIDAS"/>
-            <StringItem index="1" value="PRIMER_PLATO"/>
-            <StringItem index="2" value="SEGUNDO_PLATO"/>
-            <StringItem index="3" value="POSTRE"/>
-            <StringItem index="4" value="OTROS"/>
-          </StringArray>
-        </Property>
-      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

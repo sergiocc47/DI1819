@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
+
+import dto.Mesa;
+import dto.Ticket;
+import java.util.Collections;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.MutableComboBoxModel;
+import logica.LogicaNegocio;
 
 /**
  *
@@ -11,15 +14,57 @@ package gui;
  */
 public class AperturaTicket extends javax.swing.JDialog {
 
+    // TODO: Mostrar idTicket en TextField
     private PantallaPrincipal pantallaPrincipal;
-    
+    private LogicaNegocio logicaNegocio;
+    Ticket ticketNuevo;
+    int numeroTicketNuevo;
+    Mesa mesaTicketNuevo;
+
     /**
-     * Creates new form GestionTicket
+     * Creates new form AperturaTicket
      */
-    public AperturaTicket(java.awt.Frame parent, boolean modal) {
+    public AperturaTicket(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio) {    // Frame cambiado a Dialog
         super(parent, modal);
         pantallaPrincipal = (PantallaPrincipal) parent;
+        this.logicaNegocio = logicaNegocio;
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("APERTURA TICKET");
+
+        generarIdTicket();
+        jLabelNumeroTicketValue.setText(Integer.toString(numeroTicketNuevo));
+
+        // Cargado listaMesas en ComboBox 
+        MutableComboBoxModel<Mesa> modelListaMesas = new DefaultComboBoxModel<Mesa>();
+        jComboBoxListaMesas.setModel(modelListaMesas);
+        // TODO: Probar si funciona quitando parafernalia MutableComboBoxModel (hacer como ComboBox categorías producto)
+        for (Mesa mesa : logicaNegocio.getListaMesas()) {
+            jComboBoxListaMesas.addItem(mesa);      // TODO: Mejor con getter IdMesa
+        }
+
+        numeroTicketNuevo = Integer.parseInt(jLabelNumeroTicketValue.getText());
+        mesaTicketNuevo = (Mesa) jComboBoxListaMesas.getSelectedItem();
+        ticketNuevo = new Ticket(numeroTicketNuevo, mesaTicketNuevo);
+
+        // extraído de https://tips4java.wordpress.com/2013/11/17/combo-box-with-custom-renderer/
+        /*// Use the KeySelectionRenderer to determine which property from the Foo object to display in the combo box
+        KeySelectionRenderer renderer = new KeySelectionRenderer(jComboBoxListaMesas) {
+        @Override
+        public String getDisplayValue(Object value) {
+        Ticket ticket = (Ticket) value;
+        return ticket.getDescription();
+        }
+        };*/
+        // TODO: ¿Validación seleccionado ComboBox? y desbloqueo botón Aceptar
+        //jButtonAperturaTicketAceptar.setEnabled(false);        // necesario si hubiese validación
+    }
+
+    public void generarIdTicket() {
+        // Ya que el id es único generamos el valor siguiente al máximo evitando así duplicidad
+        // incluso cuando se haya eliminado un ticket (que, de hecho, no se puede hacer)
+        int ultimoNumeroTicket = (Collections.max(logicaNegocio.getListaTickets())).getNumeroTicket();
+        numeroTicketNuevo = ultimoNumeroTicket + 1;
     }
 
     /**
@@ -32,89 +77,97 @@ public class AperturaTicket extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabelAperturaTicket = new javax.swing.JLabel();
-        jButtonAnhadirProductoTicket = new javax.swing.JButton();
-        jButtonEliminarProductoTicket = new javax.swing.JButton();
-        jButtonCerrarTicket = new javax.swing.JButton();
-        jScrollPaneProductosTicket = new javax.swing.JScrollPane();
-        jTableProductosTicket = new javax.swing.JTable();
+        jLabelNumeroTicket = new javax.swing.JLabel();
+        jLabelNumeroTicketValue = new javax.swing.JLabel();
+        jLabelMesa = new javax.swing.JLabel();
+        jComboBoxListaMesas = new javax.swing.JComboBox<>();
+        jButtonAperturaTicketAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelAperturaTicket.setText("APERTURA TICKET");
 
-        jButtonAnhadirProductoTicket.setText("Añadir producto");
-        jButtonAnhadirProductoTicket.addActionListener(new java.awt.event.ActionListener() {
+        jLabelNumeroTicket.setText("Nº Ticket:");
+
+        jLabelNumeroTicketValue.setText("valor Nº Ticket");
+
+        jLabelMesa.setText("Mesa");
+
+        jButtonAperturaTicketAceptar.setText("Aceptar");
+        jButtonAperturaTicketAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAnhadirProductoTicketActionPerformed(evt);
+                jButtonAperturaTicketAceptarActionPerformed(evt);
             }
         });
-
-        jButtonEliminarProductoTicket.setText("Eliminar producto");
-
-        jButtonCerrarTicket.setText("Cerrar ticket");
-
-        jTableProductosTicket.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPaneProductosTicket.setViewportView(jTableProductosTicket);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonEliminarProductoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAnhadirProductoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonCerrarTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelAperturaTicket)
-                    .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelNumeroTicket)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelNumeroTicketValue, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(99, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelMesa)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabelAperturaTicket))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonAperturaTicketAceptar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jComboBoxListaMesas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(46, 46, 46))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(16, 16, 16)
                 .addComponent(jLabelAperturaTicket)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonAnhadirProductoTicket)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEliminarProductoTicket)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCerrarTicket)
-                        .addGap(0, 124, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNumeroTicket)
+                    .addComponent(jLabelNumeroTicketValue))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxListaMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMesa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonAperturaTicketAceptar)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAnhadirProductoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirProductoTicketActionPerformed
-        UnidadesProducto unidadesProducto = new UnidadesProducto(this, true);
-        unidadesProducto.setVisible(true);
-    }//GEN-LAST:event_jButtonAnhadirProductoTicketActionPerformed
+    private void jButtonAperturaTicketAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAperturaTicketAceptarActionPerformed
+        logicaNegocio.setCurrentTicket(ticketNuevo);     // Damos el valor ticketNuevo al ticket con el que vamos a trabajar en GestionProductosTicket (currentTicket)
+        logicaNegocio.getListaTickets().add(ticketNuevo);
+        //currentTicket.isCerrado(false);
+        logicaNegocio.listarTickets();  // comprobación consola
 
-    
+        GestionProductosTicket gestionProductosTicket = new GestionProductosTicket(this, true, logicaNegocio);    // NOTA: Si necesitase un Frame (pero recibe un Dialog). Se podría
+        gestionProductosTicket.setVisible(true);                                                                  // arreglar con con this.pantallaPrincipal (Frame) por this (Dialog)
+
+        dispose();
+    }//GEN-LAST:event_jButtonAperturaTicketAceptarActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAnhadirProductoTicket;
-    private javax.swing.JButton jButtonCerrarTicket;
-    private javax.swing.JButton jButtonEliminarProductoTicket;
+    private javax.swing.JButton jButtonAperturaTicketAceptar;
+    private javax.swing.JComboBox<Mesa> jComboBoxListaMesas;
     private javax.swing.JLabel jLabelAperturaTicket;
-    private javax.swing.JScrollPane jScrollPaneProductosTicket;
-    private javax.swing.JTable jTableProductosTicket;
+    private javax.swing.JLabel jLabelMesa;
+    private javax.swing.JLabel jLabelNumeroTicket;
+    private javax.swing.JLabel jLabelNumeroTicketValue;
     // End of variables declaration//GEN-END:variables
 }

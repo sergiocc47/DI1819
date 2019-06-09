@@ -5,10 +5,14 @@
  */
 package gui;
 
+import dto.Producto;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import logica.LogicaNegocio;
 import org.netbeans.validation.api.builtin.stringvalidation.MayusculaValidator;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
@@ -18,19 +22,24 @@ import org.netbeans.validation.api.ui.ValidationGroup;
  * @author sergio
  */
 public class AltaProducto extends javax.swing.JDialog {
-
-    private GestionCarta gestionCarta;
     
+    private GestionCarta gestionCarta;
+    private LogicaNegocio logicaNegocio;
+    private Producto productoModificar = null;
+
     /**
      * Creates new form AltaProducto
      */
-    public AltaProducto(java.awt.Dialog parent, boolean modal) {
+    // Constructor Alta
+    public AltaProducto(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         gestionCarta = (GestionCarta) parent;
+        this.logicaNegocio = logicaNegocio;
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("ALTA PRODUCTO");
         
-        
-        
+        cargarComboBoxProductos();
         jButtonAltaProductoAceptar.setEnabled(false);
         ValidationGroup group = validationPanelAltaProducto.getValidationGroup();
         // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
@@ -38,8 +47,7 @@ public class AltaProducto extends javax.swing.JDialog {
         group.add(jTextFieldPrecio, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_NUMBER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
         // NOT_A_NUMBER, ERR_NEGATIVE_NUMBER en Bundle_es.properties
         // NOTA: jComboBoxCategoria no se evalúa (ningún ComboBox)
-        // TODO ¿Mejorar inserción componentes del jComboBox (actualmente hecho a mano)?
-                
+
         validationPanelAltaProducto.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -51,8 +59,50 @@ public class AltaProducto extends javax.swing.JDialog {
             }
         });
     }
+
+    // Constructor Modificar
+    // TODO (fail): Corregir duplicado al modificar
+    public AltaProducto(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio, Producto productoModificar) {
+        super(parent, modal);
+        gestionCarta = (GestionCarta) parent;
+        this.logicaNegocio = logicaNegocio;
+        this.productoModificar = productoModificar;
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("MODIFICACIÓN PRODUCTO");
         
+        jTextFieldNombre.setText(productoModificar.getNombre());
+        jTextFieldNombre.setEnabled(false);
+        jTextFieldPrecio.setText(Double.toString(productoModificar.getPrecio()));
+        cargarComboBoxProductos();
+        
+        jButtonAltaProductoAceptar.setEnabled(false);
+        ValidationGroup group = validationPanelAltaProducto.getValidationGroup();
+        // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
+        group.add(jTextFieldPrecio, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_NUMBER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
+        // NOT_A_NUMBER, ERR_NEGATIVE_NUMBER en Bundle_es.properties
+
+        validationPanelAltaProducto.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanelAltaProducto.getProblem() == null) {
+                    jButtonAltaProductoAceptar.setEnabled(true);
+                } else {
+                    jButtonAltaProductoAceptar.setEnabled(false);
+                }
+            }
+        });
+    }
     
+    public void cargarComboBoxProductos() {
+        String[] categorias = {"Bebidas", "Primer plato", "Segundo plato", "Postre", "Otros"};
+        DefaultComboBoxModel dcm = new DefaultComboBoxModel();
+        for (String categoria : categorias) {
+            dcm.addElement(categoria);
+        }
+        jComboBoxCategoria.setModel(dcm);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,8 +136,6 @@ public class AltaProducto extends javax.swing.JDialog {
         jTextFieldNombre.setName("Nombre"); // NOI18N
 
         jTextFieldPrecio.setName("Precio"); // NOI18N
-
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BEBIDAS", "PRIMER_PLATO", "SEGUNDO_PLATO", "POSTRE", "OTROS" }));
 
         jButtonAltaProductoAceptar.setText("Aceptar");
         jButtonAltaProductoAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,8 +197,38 @@ public class AltaProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAltaProductoAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaProductoAceptarActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
+        
+        String nombre = jTextFieldNombre.getText();
+        double precio = Double.parseDouble(jTextFieldPrecio.getText());
+        String categoria = (String) jComboBoxCategoria.getSelectedItem();
+        
+        Producto producto = new Producto(nombre, precio, categoria);      // producto temporal
+        // Comprobamos si es un alta o una modificación
+        if (productoModificar == null) {
+            // TODO: Comprobar ignoreCase y tildes
+            if (logicaNegocio.existeProductoCarta(producto)) {
+                JOptionPane.showMessageDialog(this, "El producto " + producto.getNombre() + " ya existe.\nPor favor, introduzca otro nombre.", "ERROR ALTA PRODUCTO", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Producto NO añadido.");  //comprobación consola
+            } else {
+                logicaNegocio.altaProductoCarta(producto);
+                // Dialogo éxito alta
+                JOptionPane.showMessageDialog(this, "Producto añadido con éxito.", "ALTA PRODUCTO", JOptionPane.INFORMATION_MESSAGE);
+                //setVisible(false);    // oculta el formulario (pero no lo destruye)
+                dispose();              // destruye el formulario
+            }
+        } else {
+            // TODO (fail): Corregir duplicado al modificar
+            productoModificar.setNombre(nombre);
+            productoModificar.setPrecio(precio);
+            productoModificar.setCategoria(categoria);
+            
+            logicaNegocio.altaProductoCarta(productoModificar);
+
+            // Dialogo éxito modificación
+            JOptionPane.showMessageDialog(this, "Producto modificado con éxito.", "MODIFICACIÓN PRODUCTO", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            logicaNegocio.listarProductosCarta();// comprobación consola
+        }
     }//GEN-LAST:event_jButtonAltaProductoAceptarActionPerformed
 
 

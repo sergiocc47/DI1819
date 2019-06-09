@@ -19,20 +19,23 @@ import org.netbeans.validation.api.ui.ValidationGroup;
  * @author sergio
  */
 public class AltaMesa extends javax.swing.JDialog {
-    
+
     private GestionMesas gestionMesas;
-    
     private LogicaNegocio logicaNegocio;
+    private Mesa mesaModificar = null;
 
     /**
      * Creates new form AltaMesa
      */
+    // Constructor Alta
     public AltaMesa(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         gestionMesas = (GestionMesas) parent;
         this.logicaNegocio = logicaNegocio;
         initComponents();
-        
+        setLocationRelativeTo(null);
+        setTitle("ALTA MESA");
+
         jButtonAltaMesaAceptar.setEnabled(false);
         ValidationGroup group = validationPanelAltaMesa.getValidationGroup();
         group.add(jTextFieldIdentificador, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
@@ -40,7 +43,41 @@ public class AltaMesa extends javax.swing.JDialog {
         group.add(jTextFieldLocalizacion, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
         // MSG_MAYUSCULA en Bundle_es.properties
         group.add(jTextFieldCapacidad, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
-        
+
+        validationPanelAltaMesa.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanelAltaMesa.getProblem() == null) {
+                    jButtonAltaMesaAceptar.setEnabled(true);
+                } else {
+                    jButtonAltaMesaAceptar.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    // Constructor Modificar
+    public AltaMesa(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio, Mesa mesaModificar) {
+        super(parent, modal);
+        gestionMesas = (GestionMesas) parent;
+        this.logicaNegocio = logicaNegocio;
+        this.mesaModificar = mesaModificar;
+        initComponents();
+        setTitle("MODIFICACIÓN MESA");
+
+        jTextFieldIdentificador.setText(Integer.toString(mesaModificar.getIdMesa()));
+        jTextFieldIdentificador.setEnabled(false);
+        jTextFieldLocalizacion.setText(mesaModificar.getLocalizacion());
+        jTextFieldCapacidad.setText(Integer.toString(mesaModificar.getCapacidad()));
+
+        jButtonAltaMesaAceptar.setEnabled(false);
+        ValidationGroup group = validationPanelAltaMesa.getValidationGroup();
+        //group.add(jTextFieldIdentificador, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+        // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
+        group.add(jTextFieldLocalizacion, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
+        // MSG_MAYUSCULA en Bundle_es.properties
+        group.add(jTextFieldCapacidad, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
+
         validationPanelAltaMesa.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -158,13 +195,66 @@ public class AltaMesa extends javax.swing.JDialog {
         setVisible(false);  //supongo que oculta el formulario AltaMesa (preconfigurado al desarrollar el método jButtonAltaMesaAceptarActionPerformed
         }
          */
-        Mesa mesa = new Mesa(Integer.parseInt(jTextFieldIdentificador.getText()),
-        jTextFieldLocalizacion.getText(),
-        Integer.parseInt(jTextFieldCapacidad.getText()));
-        logicaNegocio.altaMesa(mesa);
-        //gestionMesas.anhadirMesa(mesa);   // si utilizamos DefaultTableModel
-        //setVisible(false);    // oculta el formulario (pero no lo destruye)
-        dispose();              // destruye el formulario
+ /*
+        // EJEMPLO PROPIO DI_PI1EVAL (adaptado a errores) + DIEGO
+        int idMesa = Integer.parseInt(jTextFieldIdMesa.getText());
+        String localizacion = jTextFieldLocalizacion.getText();
+        int capacidad = Integer.parseInt(jTextFieldCapacidad.getText());
+
+        Mesa mesa = new Mesa(idMesa, localizacion, capacidad);  // mesa temporal
+        // Comprobamos si es un alta o una modificación
+        if (mesaModificar == null) {
+            if (logicaNegocio.existeMesa(mesa)) {
+                JOptionPane.showMessageDialog(this, "La mesa con identificador " + mesa.getIdMesa() + " ya existe.\nPor favor, introduzca otro identificador.", "ERROR ALTA MESA", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Mesa NO añadida.");  //comprobación consola
+            } else {
+                logicaNegocio.altaMesa(mesa);
+                //Dialogo éxito alta
+                //setVisible(false);    // oculta el formulario (pero no lo destruye)
+                dispose();              // destruye el formulario
+            }
+        } else {
+            mesaModificar.setIdMesa(idMesa);
+            mesaModificar.setLocalizacion(localizacion);
+            mesaModificar.setCapacidad(capacidad);
+
+            logicaNegocio.altaMesa(mesaModificar);
+            //Dialogo éxito modificación
+            //setVisible(false);    // oculta el formulario (pero no lo destruye)
+            dispose();              // destruye el formulario
+        }
+         */
+        int idMesa = Integer.parseInt(jTextFieldIdentificador.getText());
+        String localizacion = jTextFieldLocalizacion.getText();
+        int capacidad = Integer.parseInt(jTextFieldCapacidad.getText());
+
+        Mesa mesa = new Mesa(idMesa, localizacion, capacidad);      // mesa temporal
+        // Comprobamos si es un alta o una modificación
+        if (mesaModificar == null) {
+            // TODO: Corregir rechazo id duplicado al modificar
+            if (logicaNegocio.existeMesa(mesa)) {
+                JOptionPane.showMessageDialog(this, "La mesa con identificador " + mesa.getIdMesa() + " ya existe.\nPor favor, introduzca otro identificador.", "ERROR ALTA MESA", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Mesa NO añadida.");  //comprobación consola
+            } else {
+                logicaNegocio.altaMesa(mesa);
+                //gestionMesas.anhadirMesa(mesa);   // si utilizamos DefaultTableModel
+                // Dialogo éxito alta
+                JOptionPane.showMessageDialog(this, "Mesa añadida con éxito.", "ALTA MESA", JOptionPane.INFORMATION_MESSAGE);
+                //setVisible(false);    // oculta el formulario (pero no lo destruye)
+                dispose();              // destruye el formulario
+            }
+        } else {
+            mesaModificar.setIdMesa(idMesa);
+            mesaModificar.setLocalizacion(localizacion);
+            mesaModificar.setCapacidad(capacidad);
+
+            logicaNegocio.altaMesa(mesaModificar);
+            // Dialogo éxito modificación
+            JOptionPane.showMessageDialog(this, "Mesa modificada con éxito.", "MODIFICACIÓN MESA", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+
+            logicaNegocio.listarMesas();  // comprobación consola
+        }
     }//GEN-LAST:event_jButtonAltaMesaAceptarActionPerformed
 
 

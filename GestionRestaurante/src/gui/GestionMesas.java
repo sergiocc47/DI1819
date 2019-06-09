@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import dto.Mesa;
 import gui.tablemodels.TableModelMesas;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
@@ -22,12 +19,11 @@ import logica.LogicaNegocio;
 public class GestionMesas extends javax.swing.JDialog {
 
     private PantallaPrincipal pantallaPrincipal;
-
     private LogicaNegocio logicaNegocio;
 
     // Almacenamos aquí esta propiedad para poder acceder a ella desde el botón
     // de filtrar
-    private TableRowSorter<TableModelMesas> sorter;
+    private TableRowSorter<TableModelMesas> sorter;     // TODO: Corregir error selección tras filtrado
 
     /**
      * Creates new form GestionMesas
@@ -38,6 +34,9 @@ public class GestionMesas extends javax.swing.JDialog {
         pantallaPrincipal = (PantallaPrincipal) parent;
         this.logicaNegocio = logicaNegocio;
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("GESTIÓN MESAS");
+        Collections.sort(logicaNegocio.getListaMesas());    // TODO: ¿Redundante si ya lo hemos hecho en otros métodos?
         rellenarTablaMesas();
 
         //jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));     // NOTA: rellena la tabla con listaMesas pero no tiene sorter
@@ -47,42 +46,41 @@ public class GestionMesas extends javax.swing.JDialog {
     private void rellenarTablaMesas() {
         TableModelMesas tmm = new TableModelMesas(logicaNegocio.getListaMesas());
         jTableMesas.setModel(tmm);
-
+        /*
+        // TODO: Eliminar si todo funciona correctamente
         // Añadimos la funcionalidad de ordenar
-        sorter = new TableRowSorter<>(tmm);
-        jTableMesas.setRowSorter(sorter);
+        sorter = new TableRowSorter<>(tmm);     // TODO: Eliminar para que no de error
+        jTableMesas.setRowSorter(sorter);       // al seleccionar un item tras ordenar
 
         // Establecemos el orden por defecto
         List<SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-
+        */
     }
 
     // Utiliza  DefaultTableModel en vez de nuestro TableModel (no tiene el sorter para ordenar)
-    private void rellenarTablaMesas2() {
-        String[] columnas = {"Nombre", "Curso"};
-        DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
-        for (Mesa mesa : logicaNegocio.getListaMesas()) {
-            // Creación del String en una línea
-            //String[] a = new String[]{Integer.toString(mesa.getIdMesa()),
-            //                          mesa.getLocalizacion(),
-            //                          Integer.toString(mesa.getCapacidad())};
-            String[] m = new String[2];
-            m[0] = Integer.toString(mesa.getIdMesa());
-            m[1] = mesa.getLocalizacion();
-            m[2] = Integer.toString(mesa.getCapacidad());
-            dtm.addRow(m);
-        }
-        jTableMesas.setModel(dtm);
+    /*private void rellenarTablaMesas2() {
+    String[] columnas = {"Identificador mesa", "Localización", "Capacidad"};
+    DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
+    for (Mesa mesa : logicaNegocio.getListaMesas()) {
+    // Creación del String en una línea
+    //String[] a = new String[]{Integer.toString(mesa.getIdMesa()),
+    //                          mesa.getLocalizacion(),
+    //                          Integer.toString(mesa.getCapacidad())};
+    String[] m = new String[2];
+    m[0] = Integer.toString(mesa.getIdMesa());
+    m[1] = mesa.getLocalizacion();
+    m[2] = Integer.toString(mesa.getCapacidad());
+    dtm.addRow(m);
     }
-
+    jTableMesas.setModel(dtm);
+    }*/
     // Si utilizamos DefaultTableModel
-    public void anhadirMesa (Mesa mesa){
+    /*public void anhadirMesa (Mesa mesa){
         DefaultTableModel tmm = (DefaultTableModel)jTableMesas.getModel();
         tmm.addRow(mesa.toArrayString());     //Video UT1-5 10:07 (realmente usando DefaultTableModel)
-    }
-    
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +116,11 @@ public class GestionMesas extends javax.swing.JDialog {
         });
 
         jButtonEliminarMesa.setText("Eliminar mesa");
+        jButtonEliminarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarMesaActionPerformed(evt);
+            }
+        });
 
         jTableMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,15 +173,72 @@ public class GestionMesas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnhadirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnhadirMesaActionPerformed
-        AltaMesa altaMesa = new AltaMesa(this, true, logicaNegocio);
-        altaMesa.setVisible(true);
+
+        AltaMesa dialogoAltaMesa = new AltaMesa(this, true, logicaNegocio);
+        dialogoAltaMesa.setLocationRelativeTo(null);
+        dialogoAltaMesa.setVisible(true);
+        // El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
+        Collections.sort(logicaNegocio.getListaMesas());    // ordenamos la lista
+        rellenarTablaMesas();   // actualiza la tabla añadiendo y mostrando la nueva mesa
+        // ERROR: Sobra diálogo para mostrar mensaje de confirmación al añadir una mesa
+        //JOptionPane.showMessageDialog(this, "Mesa añadida con éxito", "ALTA MESA", JOptionPane.INFORMATION_MESSAGE);
+
+        // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+        //Creación del CSV
+        //gf.escribirArchivo();
+        //Lee el List con la nueva información (corredores añadidos)
+        //gf.leerArchivo();
+        logicaNegocio.listarMesas();  // comprobación consola
     }//GEN-LAST:event_jButtonAnhadirMesaActionPerformed
 
     private void jButtonModificarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarMesaActionPerformed
-        AltaMesa altaMesa = new AltaMesa(this, true, logicaNegocio);
-        altaMesa.setVisible(true);
+        // obtenemos la posición real con respecto a la ordenación
+        //int seleccionado = jTableMesas.convertColumnIndexToModel(jTableMesas.getSelectedRow());   // teniendo en cuenta que se ha utilizado el sorter (necesita más código)
+        int seleccionado = jTableMesas.getSelectedRow();        // no es válido en caso de usar sorter
+        if (jTableMesas.getSelectedRow() != -1) {
+            Mesa mesaSeleccionada = logicaNegocio.getListaMesas().get(seleccionado);
+            AltaMesa dialogoModificarMesa = new AltaMesa(this, true, logicaNegocio, mesaSeleccionada);
+            dialogoModificarMesa.setLocationRelativeTo(null);
+            dialogoModificarMesa.setVisible(true);
+            // El hilo se queda bloqueado en el setVisible porque el dialogo es modal.
+            Collections.sort(logicaNegocio.getListaMesas());    // ordenamos la lista
+            rellenarTablaMesas();
+            // Diálogo para mostrar mensaje de confirmación al añadir Mesa
+            //JOptionPane.showMessageDialog(this, "Mesa modificada con éxito", "MODIFICACIÓN MESA", JOptionPane.INFORMATION_MESSAGE);
+
+            // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+            // Creación del CSV
+            //gf.escribirArchivo();
+            // Lee el List con la nueva información (mesas añadidas)
+            //gf.leerArchivo();
+            logicaNegocio.listarMesas();  // comprobación consola
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una mesa de la tabla.", "ADVERTENCIA MODIFICACIÓN MESA", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButtonModificarMesaActionPerformed
 
+    private void jButtonEliminarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarMesaActionPerformed
+
+        int seleccionado = jTableMesas.getSelectedRow();        // no es válido en caso de haber oredenado la tabla mediante sorter
+        if (jTableMesas.getSelectedRow() != -1) {
+            Mesa mesaSeleccionada = logicaNegocio.getListaMesas().get(seleccionado);
+            logicaNegocio.getListaMesas().remove(mesaSeleccionada);
+            Collections.sort(logicaNegocio.getListaMesas());    // ordenamos la lista
+            rellenarTablaMesas();   // actualiza la tabla añadiendo y mostrando la nueva mesa
+            //Diálogo para mostrar mensaje de confirmación al añadir corredor.
+            JOptionPane.showMessageDialog(this, "Mesa eliminada con éxito.", "ELIMINACIÓN MESA", JOptionPane.INFORMATION_MESSAGE);
+
+            // PERSISTENCIA DATOS EN CSV (adaptar a LogicaNegocio sin GestorFichero)
+            // Creación del CSV
+            //gf.escribirArchivo();
+            // Lee el List con la nueva información (mesas añadidas)
+            //gf.leerArchivo();
+            logicaNegocio.listarMesas();  // comprobación consola
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una mesa de la tabla.", "ADVERTENCIA ELIMINACIÓN MESA", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonEliminarMesaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnhadirMesa;
