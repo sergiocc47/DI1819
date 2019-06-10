@@ -4,8 +4,12 @@ import dto.Producto;
 import dto.ProductoTicket;
 import dto.Ticket;
 import gui.tablemodels.TableModelProductosTicket;
+import java.io.File;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
@@ -46,6 +50,7 @@ public class GestionProductosTicket extends javax.swing.JDialog {
         setTitle("FORMULARIO APERTURA TICKET");
         //logicaNegocio.setCurrentTicket(ticketReapertura);     // Sobra ya que convierte currentTicket a null
         rellenarTablaProductosTicket();
+        ponLaAyuda();
 
         // Recogemos numeroTicket e idMesa
         jLabelNumeroTicket.setText("Nº ticket: " + Integer.toString(logicaNegocio.getCurrentTicket().getNumeroTicket()));
@@ -54,7 +59,6 @@ public class GestionProductosTicket extends javax.swing.JDialog {
         jTextFieldTotal.setText(Double.toString(logicaNegocio.getCurrentTicket().calcularTotalTicket()));       // TODO: Corregir problema redondeo
     }
 
-    // TODO: Seguir aquí y comprobar si funcionan ambos constructores
     // Constructor Modificar
     public GestionProductosTicket(java.awt.Frame parent, boolean modal, LogicaNegocio logicaNegocio, Ticket ticketReapertura) {
         super(parent, modal);
@@ -72,6 +76,7 @@ public class GestionProductosTicket extends javax.swing.JDialog {
         jTextFieldTotal.setText(Double.toString(logicaNegocio.getCurrentTicket().calcularTotalTicket()));
         Collections.sort(logicaNegocio.getCurrentTicket().getListaProductosTicket());   // TODO: ¿Redundante si ya lo hemos hecho en otros métodos?
         rellenarTablaProductosTicket();     // TODO: ¿Necesario? Actualizar tabla al hacer algun cambio en listaProductosTicket
+        ponLaAyuda();
 
         /*
         // No es necesario en el nuevo enfoque del Dialog
@@ -110,6 +115,24 @@ public class GestionProductosTicket extends javax.swing.JDialog {
          */
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "gestion_productos_ticket", helpset);
+        hb.enableHelpKey(getRootPane(), "gestion_productos_ticket", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     // TODO: Debe permitir tener más de un ticket abierto a la vez (pero solo uno por mesa)
     
     /**
@@ -133,6 +156,9 @@ public class GestionProductosTicket extends javax.swing.JDialog {
         jLabelTotal = new javax.swing.JLabel();
         jTextFieldTotal = new javax.swing.JTextField();
         jButtonCerrarTicket = new javax.swing.JButton();
+        jMenuBarGestionProductosTicket = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -197,6 +223,15 @@ public class GestionProductosTicket extends javax.swing.JDialog {
             }
         });
 
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarGestionProductosTicket.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarGestionProductosTicket);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,7 +286,7 @@ public class GestionProductosTicket extends javax.swing.JDialog {
                     .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCerrarTicket)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -341,7 +376,10 @@ public class GestionProductosTicket extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonGuardarCambiosTicketActionPerformed
 
     private void jButtonCerrarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarTicketActionPerformed
+        currentTicket = logicaNegocio.getCurrentTicket();
         currentTicket.setCerrado(true);
+        //logicaNegocio.altaTicket(currentTicket);      // TODO (error): No es necesario porque el ticket ya está añadido desde el momento en que se crea
+        JOptionPane.showMessageDialog(this, "Ticket cerrado con éxito.", "CIERRE TICKET", JOptionPane.INFORMATION_MESSAGE);
         dispose();
     }//GEN-LAST:event_jButtonCerrarTicketActionPerformed
 
@@ -363,6 +401,9 @@ public class GestionProductosTicket extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelIdMesa;
     private javax.swing.JLabel jLabelNumeroTicket;
     private javax.swing.JLabel jLabelTotal;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarGestionProductosTicket;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JScrollPane jScrollPaneProductosTicket;
     private javax.swing.JTable jTableProductosTicket;
     private javax.swing.JTextField jTextFieldTotal;

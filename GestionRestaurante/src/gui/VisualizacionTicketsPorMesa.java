@@ -6,8 +6,13 @@ import dto.ProductoTicket;
 import dto.Ticket;
 import gui.tablemodels.TableModelProductosTicket;
 import gui.tablemodels.TableModelTickets;
+import java.io.File;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
@@ -18,7 +23,7 @@ import logica.LogicaNegocio;
  *
  * @author sergio
  */
-public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
+public class VisualizacionTicketsPorMesa extends javax.swing.JDialog {
 
     // TODO: Adaptar a su función (ver ticket)
     private FiltradoTicketMesa filtradoTicketMesa;
@@ -34,7 +39,7 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
      * Creates new form GestionTicket
      */
     // TODO: ¿Necesaria mesaFiltradoTicket en constructor?
-    public VisualizacionTicketsFiltradoMesa(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
+    public VisualizacionTicketsPorMesa(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         filtradoTicketMesa = (FiltradoTicketMesa) parent;
         this.logicaNegocio = logicaNegocio;
@@ -46,8 +51,9 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
         mesaFiltradoTicket = logicaNegocio.getMesaFiltradoTicket();
         
         jLabelHistorialTicketsMesa.setText("Historial tickets mesa: " + Integer.toString(mesaFiltradoTicket.getIdMesa()));
-        Collections.sort(logicaNegocio.getListaTicketsFiltradoMesa(mesaFiltradoTicket));
+        //Collections.sort(lstTicketFiltrado);      // TODO (borrar): No es donde debe ir. Se ordena en LogicaNegocio
         rellenarTablaTickets();
+        ponLaAyuda();
     }
 
     // TODO: Corregir formato fecha
@@ -57,6 +63,24 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
         jTableTicketsMesa.setModel(tmt);
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "visualizacion_tickets_mesa", helpset);
+        hb.enableHelpKey(getRootPane(), "visualizacion_tickets_mesa", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +97,9 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
         jButtonVolverAtras = new javax.swing.JButton();
         jScrollPaneProductosTicket = new javax.swing.JScrollPane();
         jTableTicketsMesa = new javax.swing.JTable();
+        jMenuBarVisualizacionTicketsPorMesa = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -81,7 +108,7 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
             }
         });
 
-        jLabelVisualizacionTicketFiltradoMesa.setText("VISUALIZACIÓN TICKETS POR MESA");
+        jLabelVisualizacionTicketFiltradoMesa.setText("FILTRADO TICKETS POR MESA");
 
         jLabelHistorialTicketsMesa.setText("Historial tickets mesa");
 
@@ -118,6 +145,15 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
             }
         ));
         jScrollPaneProductosTicket.setViewportView(jTableTicketsMesa);
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarVisualizacionTicketsPorMesa.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarVisualizacionTicketsPorMesa);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,7 +195,7 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVisualizacionTicket)
                     .addComponent(jButtonVolverAtras))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,6 +227,9 @@ public class VisualizacionTicketsFiltradoMesa extends javax.swing.JDialog {
     private javax.swing.JButton jButtonVolverAtras;
     private javax.swing.JLabel jLabelHistorialTicketsMesa;
     private javax.swing.JLabel jLabelVisualizacionTicketFiltradoMesa;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarVisualizacionTicketsPorMesa;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JScrollPane jScrollPaneProductosTicket;
     private javax.swing.JTable jTableTicketsMesa;
     // End of variables declaration//GEN-END:variables

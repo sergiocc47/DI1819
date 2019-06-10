@@ -6,8 +6,12 @@
 package gui;
 
 import dto.Producto;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
@@ -37,7 +41,8 @@ public class AltaProducto extends javax.swing.JDialog {
         this.logicaNegocio = logicaNegocio;
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("ALTA PRODUCTO");
+        setTitle("ALTA PRODUCTO CARTA");
+        ponLaAyuda();
         
         cargarComboBoxProductos();
         jButtonAltaProductoAceptar.setEnabled(false);
@@ -61,7 +66,6 @@ public class AltaProducto extends javax.swing.JDialog {
     }
 
     // Constructor Modificar
-    // TODO (fail): Corregir duplicado al modificar
     public AltaProducto(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio, Producto productoModificar) {
         super(parent, modal);
         gestionCarta = (GestionCarta) parent;
@@ -69,7 +73,8 @@ public class AltaProducto extends javax.swing.JDialog {
         this.productoModificar = productoModificar;
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("MODIFICACIÓN PRODUCTO");
+        setTitle("MODIFICACIÓN PRODUCTO CARTA");
+        ponLaAyuda();
         
         jTextFieldNombre.setText(productoModificar.getNombre());
         jTextFieldNombre.setEnabled(false);
@@ -104,6 +109,24 @@ public class AltaProducto extends javax.swing.JDialog {
         jComboBoxCategoria.setModel(dcm);
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "alta_producto_carta", helpset);
+        hb.enableHelpKey(getRootPane(), "alta_producto_carta", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,6 +145,9 @@ public class AltaProducto extends javax.swing.JDialog {
         jComboBoxCategoria = new javax.swing.JComboBox<>();
         jButtonAltaProductoAceptar = new javax.swing.JButton();
         validationPanelAltaProducto = new org.netbeans.validation.api.ui.swing.ValidationPanel();
+        jMenuBarAltaProducto = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -143,6 +169,15 @@ public class AltaProducto extends javax.swing.JDialog {
                 jButtonAltaProductoAceptarActionPerformed(evt);
             }
         });
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarAltaProducto.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarAltaProducto);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,7 +225,7 @@ public class AltaProducto extends javax.swing.JDialog {
                 .addComponent(validationPanelAltaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAltaProductoAceptar)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,6 +274,9 @@ public class AltaProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelCategoria;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelPrecio;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarAltaProducto;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanelAltaProducto;

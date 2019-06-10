@@ -2,9 +2,13 @@ package gui;
 
 import dto.Producto;
 import gui.tablemodels.TableModelProductosCarta;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -38,7 +42,7 @@ public class GestionCarta extends javax.swing.JDialog {
 
         Collections.sort(logicaNegocio.getListaProductosCarta());   // TODO: ¿Redundante si ya lo hemos hecho en otros métodos?
         rellenarTablaProductosCarta();
-
+        ponLaAyuda();
     }
 
     // Utilizando un AbstractTableModel
@@ -58,6 +62,24 @@ public class GestionCarta extends javax.swing.JDialog {
          */
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "gestion_carta", helpset);
+        hb.enableHelpKey(getRootPane(), "gestion_carta", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +95,9 @@ public class GestionCarta extends javax.swing.JDialog {
         jButtonEliminarProductoCarta = new javax.swing.JButton();
         jScrollPaneProductosCarta = new javax.swing.JScrollPane();
         jTableProductosCarta = new javax.swing.JTable();
+        jMenuBarGestionCarta = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,6 +137,15 @@ public class GestionCarta extends javax.swing.JDialog {
         ));
         jScrollPaneProductosCarta.setViewportView(jTableProductosCarta);
 
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarGestionCarta.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarGestionCarta);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,7 +176,7 @@ public class GestionCarta extends javax.swing.JDialog {
                         .addComponent(jButtonModificarProductoCarta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEliminarProductoCarta)
-                        .addGap(0, 124, Short.MAX_VALUE)))
+                        .addGap(0, 103, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -224,6 +258,9 @@ public class GestionCarta extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEliminarProductoCarta;
     private javax.swing.JButton jButtonModificarProductoCarta;
     private javax.swing.JLabel jLabelGestionCarta;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarGestionCarta;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JScrollPane jScrollPaneProductosCarta;
     private javax.swing.JTable jTableProductosCarta;
     // End of variables declaration//GEN-END:variables

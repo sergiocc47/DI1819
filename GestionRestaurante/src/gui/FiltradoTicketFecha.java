@@ -7,7 +7,11 @@ package gui;
 
 import dto.Mesa;
 import dto.Ticket;
+import java.io.File;
+import java.net.URL;
 import java.util.Date;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,7 +28,9 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
 
     private PantallaPrincipal pantallaPrincipal;
     private LogicaNegocio logicaNegocio;
-    private Ticket ticketFiltrado;
+    private Ticket ticketFiltrado;      // TODO (borrar): ¿Es necesario?
+    private Date fechaInicioFiltradoTicket;
+    private Date fechaFinFiltradoTicket;
 
     /**
      * Creates new form FiltradoTicketFecha
@@ -36,10 +42,8 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("FILTRADO TICKET POR FECHA");
+        ponLaAyuda();
 
-        // TODO: Controlar que la fecha de fin no sea anterior a la de inicio
-        jButtonFiltradoTicketFechaAceptar.setEnabled(false);
-        ValidationGroup group = validationPanelFiltradoTicketFecha.getValidationGroup();
         /*group.add(jTextFieldIdentificador, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.REQUIRE_VALID_INTEGER);
         // MSG_MAY_NOT_BE_EMPTY, ERR_NOT_INTEGER en Bundle_es.properties
         group.add(jTextFieldLocalizacion, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculaValidator());
@@ -58,6 +62,24 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
         });*/
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "filtrado_ticket_fecha", helpset);
+        hb.enableHelpKey(getRootPane(), "filtrado_ticket_fecha", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +96,9 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
         jSpinnerFechaFin = new javax.swing.JSpinner();
         jButtonFiltradoTicketFechaAceptar = new javax.swing.JButton();
         validationPanelFiltradoTicketFecha = new org.netbeans.validation.api.ui.swing.ValidationPanel();
+        jMenuBarFiltradoTicketFecha = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -84,6 +109,11 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
         jLabelFiltradoTicketFechaFin.setText("Hasta");
 
         jSpinnerFechaInicio.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFechaInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jSpinnerFechaInicioPropertyChange(evt);
+            }
+        });
 
         jSpinnerFechaFin.setModel(new javax.swing.SpinnerDateModel());
 
@@ -94,21 +124,28 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
             }
         });
 
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarFiltradoTicketFecha.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarFiltradoTicketFecha);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonFiltradoTicketFechaAceptar)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonFiltradoTicketFechaAceptar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelFiltradoTicketFechaInicio)
                             .addComponent(jLabelFiltradoTicketFechaFin))
-                        .addGap(64, 64, 64)
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelFiltradoTicketFecha)
                             .addComponent(jSpinnerFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,7 +173,7 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
                 .addComponent(validationPanelFiltradoTicketFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonFiltradoTicketFechaAceptar)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -214,11 +251,29 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
             logicaNegocio.listarMesas();  // comprobación consola
         }
          */
-        VisualizacionTicketsFiltradoFecha visualizacionTicketsFiltradoFecha = new VisualizacionTicketsFiltradoFecha(this, true, logicaNegocio);     // NOTA: Si necesitase un Frame (pero recibe un Dialog). Se podría
-        visualizacionTicketsFiltradoFecha.setVisible(true);                                                                                         // arreglar con con this.pantallaPrincipal (Frame) por this (Dialog)
+
+        fechaInicioFiltradoTicket = (Date) jSpinnerFechaInicio.getValue();
+        logicaNegocio.setFechaInicioFiltradoTicket(fechaInicioFiltradoTicket);
+        fechaFinFiltradoTicket = (Date) jSpinnerFechaFin.getValue();
+        logicaNegocio.setFechaFinFiltradoTicket(fechaFinFiltradoTicket);
+
+        if (fechaInicioFiltradoTicket.compareTo(fechaFinFiltradoTicket) > 0) {
+            jButtonFiltradoTicketFechaAceptar.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser mayor que la de fin.", "ADVERTENCIA SELECCIÓN FECHAS", JOptionPane.ERROR_MESSAGE);
+        } else {
+            jButtonFiltradoTicketFechaAceptar.setEnabled(true);
+        }
+        VisualizacionTicketsPorFecha visualizacionTicketsFiltradoFecha = new VisualizacionTicketsPorFecha(this, true, logicaNegocio);     // NOTA: Si necesitase un Frame (pero recibe un Dialog). Se podría
+        visualizacionTicketsFiltradoFecha.setVisible(true);                                                                               // arreglar con con this.pantallaPrincipal (Frame) por this (Dialog)
 
         dispose();
     }//GEN-LAST:event_jButtonFiltradoTicketFechaAceptarActionPerformed
+
+    private void jSpinnerFechaInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jSpinnerFechaInicioPropertyChange
+        // Asignar fecha de inicio de filtrado del valor de la fecha seleccionado
+        // Convertir el object a Date
+        logicaNegocio.setFechaInicioFiltradoTicket((Date) jSpinnerFechaInicio.getValue());
+    }//GEN-LAST:event_jSpinnerFechaInicioPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -226,6 +281,9 @@ public class FiltradoTicketFecha extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFiltradoTicketFecha;
     private javax.swing.JLabel jLabelFiltradoTicketFechaFin;
     private javax.swing.JLabel jLabelFiltradoTicketFechaInicio;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarFiltradoTicketFecha;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JSpinner jSpinnerFechaFin;
     private javax.swing.JSpinner jSpinnerFechaInicio;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanelFiltradoTicketFecha;

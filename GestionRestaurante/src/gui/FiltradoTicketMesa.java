@@ -2,7 +2,11 @@ package gui;
 
 import dto.Mesa;
 import dto.Ticket;
+import java.io.File;
+import java.net.URL;
 import java.util.Collections;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.MutableComboBoxModel;
@@ -29,7 +33,7 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("FILTRADO TICKET POR MESA");
-
+        ponLaAyuda();
 
         // Cargado listaMesas en ComboBox
         MutableComboBoxModel<Mesa> modelListaMesas = new DefaultComboBoxModel<Mesa>();
@@ -38,8 +42,6 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
         for (Mesa mesa : logicaNegocio.getListaMesas()) {
             jComboBoxListaMesas.addItem(mesa);      // TODO: Mejor con getter IdMesa
         }
-
-        mesaFiltradoTicket = (Mesa) jComboBoxListaMesas.getSelectedItem();
 
         // extraído de https://tips4java.wordpress.com/2013/11/17/combo-box-with-custom-renderer/
         /*// Use the KeySelectionRenderer to determine which property from the Foo object to display in the combo box
@@ -54,6 +56,24 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
         //jButtonAperturaTicketAceptar.setEnabled(false);        // necesario si hubiese validación
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "filtrado_ticket_mesa", helpset);
+        hb.enableHelpKey(getRootPane(), "filtrado_ticket_mesa", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,10 +83,19 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jLabelFiltradoTicketMesa = new javax.swing.JLabel();
         jLabelMesa = new javax.swing.JLabel();
         jComboBoxListaMesas = new javax.swing.JComboBox<>();
         jButtonFiltradoTicketMesaAceptar = new javax.swing.JButton();
+        jMenuBarFiltradoTicketMesa = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,6 +109,15 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
                 jButtonFiltradoTicketMesaAceptarActionPerformed(evt);
             }
         });
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarFiltradoTicketMesa.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarFiltradoTicketMesa);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,15 +143,15 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(34, 34, 34)
                 .addComponent(jLabelFiltradoTicketMesa)
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxListaMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMesa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonFiltradoTicketMesaAceptar)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,10 +165,11 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
         }
         logicaNegocio.listarTickets();  // comprobación consola
         */
+        mesaFiltradoTicket = (Mesa) jComboBoxListaMesas.getSelectedItem();
         logicaNegocio.setMesaFiltradoTicket(mesaFiltradoTicket);
         //logicaNegocio.getListaTicketsFiltradoMesa(mesaFiltradoTicket);
         
-        VisualizacionTicketsFiltradoMesa visualizacionTicketsFiltradoMesa = new VisualizacionTicketsFiltradoMesa(this, true, logicaNegocio);    // NOTA: Si necesitase un Frame (pero recibe un Dialog). Se podría
+        VisualizacionTicketsPorMesa visualizacionTicketsFiltradoMesa = new VisualizacionTicketsPorMesa(this, true, logicaNegocio);    // NOTA: Si necesitase un Frame (pero recibe un Dialog). Se podría
         visualizacionTicketsFiltradoMesa.setVisible(true);                                                                                      // arreglar con con this.pantallaPrincipal (Frame) por this (Dialog)
 
         dispose();
@@ -142,5 +181,10 @@ public class FiltradoTicketMesa extends javax.swing.JDialog {
     private javax.swing.JComboBox<Mesa> jComboBoxListaMesas;
     private javax.swing.JLabel jLabelFiltradoTicketMesa;
     private javax.swing.JLabel jLabelMesa;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarFiltradoTicketMesa;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,9 +2,13 @@ package gui;
 
 import dto.Mesa;
 import gui.tablemodels.TableModelMesas;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
@@ -38,8 +42,8 @@ public class GestionMesas extends javax.swing.JDialog {
         setTitle("GESTIÓN MESAS");
         Collections.sort(logicaNegocio.getListaMesas());    // TODO: ¿Redundante si ya lo hemos hecho en otros métodos?
         rellenarTablaMesas();
-
         //jTableMesas.setModel(new TableModelMesas(logicaNegocio.getListaMesas()));     // NOTA: rellena la tabla con listaMesas pero no tiene sorter
+        ponLaAyuda();
     }
 
     // Utilizando un AbstractTableModel
@@ -56,7 +60,7 @@ public class GestionMesas extends javax.swing.JDialog {
         List<SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-        */
+         */
     }
 
     // Utiliza  DefaultTableModel en vez de nuestro TableModel (no tiene el sorter para ordenar)
@@ -81,6 +85,24 @@ public class GestionMesas extends javax.swing.JDialog {
         DefaultTableModel tmm = (DefaultTableModel)jTableMesas.getModel();
         tmm.addRow(mesa.toArrayString());     //Video UT1-5 10:07 (realmente usando DefaultTableModel)
     }*/
+    private void ponLaAyuda() {
+        try {
+            // Carga el fichero de ayuda
+            File fichero = new File("help" + File.separator + "help_set.hs");
+            URL hsURL = fichero.toURI().toURL();
+
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            // Pone ayuda a item de menu al pulsarlo 
+            // y a F1 en ventana principal.
+            hb.enableHelpOnButton(jMenuItemMostrarAyuda, "gestion_mesas", helpset);
+            hb.enableHelpKey(getRootPane(), "gestion_mesas", helpset);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +118,9 @@ public class GestionMesas extends javax.swing.JDialog {
         jButtonEliminarMesa = new javax.swing.JButton();
         jScrollPaneMesas = new javax.swing.JScrollPane();
         jTableMesas = new javax.swing.JTable();
+        jMenuBarGestionMesas = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -135,6 +160,15 @@ public class GestionMesas extends javax.swing.JDialog {
         ));
         jScrollPaneMesas.setViewportView(jTableMesas);
 
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarGestionMesas.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarGestionMesas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +199,7 @@ public class GestionMesas extends javax.swing.JDialog {
                         .addComponent(jButtonModificarMesa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEliminarMesa)
-                        .addGap(0, 124, Short.MAX_VALUE)))
+                        .addGap(0, 103, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -245,6 +279,9 @@ public class GestionMesas extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEliminarMesa;
     private javax.swing.JButton jButtonModificarMesa;
     private javax.swing.JLabel jLabelGestionMesas;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarGestionMesas;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JScrollPane jScrollPaneMesas;
     private javax.swing.JTable jTableMesas;
     // End of variables declaration//GEN-END:variables

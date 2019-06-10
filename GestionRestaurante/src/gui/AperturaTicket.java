@@ -2,7 +2,11 @@ package gui;
 
 import dto.Mesa;
 import dto.Ticket;
+import java.io.File;
+import java.net.URL;
 import java.util.Collections;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.MutableComboBoxModel;
@@ -31,6 +35,7 @@ public class AperturaTicket extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("APERTURA TICKET");
+        ponLaAyuda();
 
         generarIdTicket();
         jLabelNumeroTicketValue.setText(Integer.toString(numeroTicketNuevo));
@@ -67,6 +72,24 @@ public class AperturaTicket extends javax.swing.JDialog {
         numeroTicketNuevo = ultimoNumeroTicket + 1;
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "apertura_ticket", helpset);
+        hb.enableHelpKey(getRootPane(), "apertura_ticket", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,6 +105,9 @@ public class AperturaTicket extends javax.swing.JDialog {
         jLabelMesa = new javax.swing.JLabel();
         jComboBoxListaMesas = new javax.swing.JComboBox<>();
         jButtonAperturaTicketAceptar = new javax.swing.JButton();
+        jMenuBarAperturaTicket = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,6 +125,15 @@ public class AperturaTicket extends javax.swing.JDialog {
                 jButtonAperturaTicketAceptarActionPerformed(evt);
             }
         });
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarAperturaTicket.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarAperturaTicket);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +178,7 @@ public class AperturaTicket extends javax.swing.JDialog {
                     .addComponent(jLabelMesa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAperturaTicketAceptar)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -169,5 +204,8 @@ public class AperturaTicket extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelMesa;
     private javax.swing.JLabel jLabelNumeroTicket;
     private javax.swing.JLabel jLabelNumeroTicketValue;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarAperturaTicket;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     // End of variables declaration//GEN-END:variables
 }

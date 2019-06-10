@@ -2,6 +2,10 @@ package gui;
 
 import dto.Producto;
 import dto.ProductoTicket;
+import java.io.File;
+import java.net.URL;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.MutableComboBoxModel;
@@ -35,6 +39,7 @@ public class CantidadesProducto extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle("FORMULARIO AÑADIR PRODUCTO TICKET");
         rellenarComboBoxListaProductos();
+        ponLaAyuda();
         
         jButtonAceptarProductoYCantidad.setEnabled(false);
         ValidationGroup group = validationPanelCantidadesProducto.getValidationGroup();
@@ -53,7 +58,6 @@ public class CantidadesProducto extends javax.swing.JDialog {
     }
 
     // Constructor Modificar
-    // TODO (fail): Corregir duplicado al modificar
     public CantidadesProducto(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio, ProductoTicket productoTicketModificar) {
         super(parent, modal);
         gestionProductosTicket = (GestionProductosTicket) parent;
@@ -63,17 +67,7 @@ public class CantidadesProducto extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle("FORMULARIO MODIFICACIÓN PRODUCTO TICKET");
         rellenarComboBoxListaProductos();
-        
-        
-        // Fail 1
-        /*
-        if (jComboBoxListaProductos.getSelectedItem().equals(productoTicketModificar.getProducto())){
-        jComboBoxListaProductos.setSelectedItem(productoTicketModificar.getProducto());
-        jComboBoxListaProductos.setEnabled(false);
-        }  
-        */
-        //Fail 2
-        //jComboBoxListaProductos.setSelectedItem(productoTicketModificar.getProducto().getNombre());
+        ponLaAyuda();
         
         //jComboBoxListaProductos.setEnabled(false);      // TODO: Arreglar visualización nombreProducto en ComboBox
         jTextFieldCantidad.setText(Integer.toString(productoTicketModificar.getCantidad()));
@@ -141,6 +135,24 @@ public class CantidadesProducto extends javax.swing.JDialog {
          */
     }
 
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "alta_producto_ticket", helpset);
+        hb.enableHelpKey(getRootPane(), "alta_producto_ticket", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,6 +169,9 @@ public class CantidadesProducto extends javax.swing.JDialog {
         jTextFieldCantidad = new javax.swing.JTextField();
         jButtonAceptarProductoYCantidad = new javax.swing.JButton();
         validationPanelCantidadesProducto = new org.netbeans.validation.api.ui.swing.ValidationPanel();
+        jMenuBarCantidadesProducto = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -172,6 +187,15 @@ public class CantidadesProducto extends javax.swing.JDialog {
                 jButtonAceptarProductoYCantidadActionPerformed(evt);
             }
         });
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarCantidadesProducto.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarCantidadesProducto);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,7 +236,7 @@ public class CantidadesProducto extends javax.swing.JDialog {
                 .addComponent(validationPanelCantidadesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAceptarProductoYCantidad)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -257,11 +281,12 @@ public class CantidadesProducto extends javax.swing.JDialog {
         // Comprobamos si es un alta o una modificación
         if (productoTicketModificar == null) {
             // TODO (fail): ¿Podría fallar porque productoTicket está formado por cantidad y producto?
-            if (logicaNegocio.getCurrentTicket().getListaProductosTicket().contains(productoTicket.getProducto())) {
+            if (logicaNegocio.existeProductoTicket(productoTicket)) {
                 JOptionPane.showMessageDialog(this, "El producto con nombre " + productoTicket.getProducto().getNombre() + " ya está en el ticket.\nPor favor, seleccione otro producto.", "ERROR ALTA MESA", JOptionPane.ERROR_MESSAGE);
                 System.out.println("Producto NO añadido al ticket.");  //comprobación consola
             } else {
-                logicaNegocio.getCurrentTicket().getListaProductosTicket().add(productoTicket);
+                //logicaNegocio.getCurrentTicket().getListaProductosTicket().add(productoTicket);   // TODO (borrar): Repite el producto al añadir/modificar
+                logicaNegocio.altaProductoTicket(productoTicket);
                 //gestionProductosTicket.rellenarTablaProductosTicket();  // TODO: ¿necesario?
                 dispose();
             }
@@ -269,7 +294,7 @@ public class CantidadesProducto extends javax.swing.JDialog {
             // TODO (fail): Corregir duplicado al modificar
             productoTicketModificar.setCantidad(cantidad);
             productoTicketModificar.setProducto(producto);
-            logicaNegocio.getCurrentTicket().getListaProductosTicket().add(productoTicket);
+            //logicaNegocio.getCurrentTicket().getListaProductosTicket().add(productoTicket);   // TODO (borrar): Repite el producto al añadir/modificar
             dispose();
         }
     }//GEN-LAST:event_jButtonAceptarProductoYCantidadActionPerformed
@@ -281,6 +306,9 @@ public class CantidadesProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelCantidad;
     private javax.swing.JLabel jLabelProducto;
     private javax.swing.JLabel jLabelSeleccionProducto;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarCantidadesProducto;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JTextField jTextFieldCantidad;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanelCantidadesProducto;
     // End of variables declaration//GEN-END:variables

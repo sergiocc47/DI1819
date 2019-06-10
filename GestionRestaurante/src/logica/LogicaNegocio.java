@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import org.openide.util.Exceptions;
 import utils.Utils;
 
@@ -414,8 +415,7 @@ public class LogicaNegocio {
         //Ticket ticket = new Ticket(numeroTicket, fecha, estado, mesaTicket, listaProductosTicket);
         //listaTickets.add(ticket);
     }
-    */
-    
+     */
     public List<Ticket> getListaTickets() {
         return listaTickets;
     }
@@ -454,28 +454,49 @@ public class LogicaNegocio {
         this.mesaFiltradoTicket = mesaFiltradoTicket;
     }
 
-    // TODO (fail): Corregir que siempre coja el ticket nº 4 (de la mesa 1) y lo añada dos veces
     public List<Ticket> getListaTicketsFiltradoMesa(Mesa mesaFiltrado) {
+        listaTicketsFiltradoMesa.clear();
         for (Ticket ticket : listaTickets) {
             if (ticket.getMesaTicket() == mesaFiltrado) {
                 listaTicketsFiltradoMesa.add(ticket);
             }
         }
+        Collections.sort(listaTicketsFiltradoMesa);     // NOTA: Esta es la metodología de ordenación correcta
         return listaTicketsFiltradoMesa;
+    }
+
+    public Date getFechaInicioFiltradoTicket() {
+        return fechaInicioFiltradoTicket;
+    }
+
+    public void setFechaInicioFiltradoTicket(Date fechaInicioFiltradoTicket) {
+        this.fechaInicioFiltradoTicket = fechaInicioFiltradoTicket;
+    }
+
+    public Date getFechaFinFiltradoTicket() {
+        return fechaFinFiltradoTicket;
+    }
+
+    public void setFechaFinFiltradoTicket(Date fechaFinFiltradoTicket) {
+        this.fechaFinFiltradoTicket = fechaFinFiltradoTicket;
     }
 
     // TODO (fail): Corregir método ¿Necesarios getter y setter fechas filtrado?
     public List<Ticket> getListaTicketsFiltradoFecha(Date fechaInicioFiltradoTicket, Date fechaFinFiltradoTicket) {
-        /*for (Ticket ticket : listaTickets) {
+        listaTicketsFiltradoFecha.clear();
+        for (Ticket ticket : listaTickets) {
             //if (ticket.getFecha().compareTo(fechaFinFiltradoTicket)...)
-                //Return value is 0 if both dates are equal.
-                //Return value is greater than 0 , if Date is after the date argument.
-                //Return value is less than 0, if Date is before the date argument.
-            
-            if (ticket.getFecha() >= fechaInicioFiltradoTicket && ticket.getFecha() <= fechaFinFiltradoTicket){
+            //Return value is 0 if both dates are equal.
+            //Return value is greater than 0 , if Date is after the date argument.
+            //Return value is less than 0, if Date is before the date argument.
+
+            Date fechaTicket = ticket.getFecha();
+            if ((fechaTicket.compareTo(fechaInicioFiltradoTicket) > 0 || fechaTicket.compareTo(fechaInicioFiltradoTicket) == 0)
+                    && (fechaTicket.compareTo(fechaFinFiltradoTicket) < 0 || fechaTicket.compareTo(fechaFinFiltradoTicket) == 0)) {
                 listaTicketsFiltradoFecha.add(ticket);
             }
-        }*/
+        }
+        Collections.sort(listaTicketsFiltradoFecha);
         return listaTicketsFiltradoFecha;
     }
 
@@ -506,8 +527,8 @@ public class LogicaNegocio {
         return listaProductosTicket = getCurrentTicket().getListaProductosTicket();
     }
 
-    public void existeProductoTicket(ProductoTicket productoTicket) {
-        getCurrentTicket().getListaProductosTicket().contains(productoTicket);
+    public boolean existeProductoTicket(ProductoTicket productoTicket) {
+        return getCurrentTicket().getListaProductosTicket().contains(productoTicket);
     }
 
     public void borrarProductoTicket(ProductoTicket productoTicket) {

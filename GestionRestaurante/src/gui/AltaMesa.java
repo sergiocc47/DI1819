@@ -6,6 +6,10 @@
 package gui;
 
 import dto.Mesa;
+import java.io.File;
+import java.net.URL;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -35,6 +39,7 @@ public class AltaMesa extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("ALTA MESA");
+        ponLaAyuda();
 
         jButtonAltaMesaAceptar.setEnabled(false);
         ValidationGroup group = validationPanelAltaMesa.getValidationGroup();
@@ -64,6 +69,7 @@ public class AltaMesa extends javax.swing.JDialog {
         this.mesaModificar = mesaModificar;
         initComponents();
         setTitle("MODIFICACIÓN MESA");
+        ponLaAyuda();
 
         jTextFieldIdentificador.setText(Integer.toString(mesaModificar.getIdMesa()));
         jTextFieldIdentificador.setEnabled(false);
@@ -89,7 +95,25 @@ public class AltaMesa extends javax.swing.JDialog {
             }
         });
     }
-
+    
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "alta_mesa", helpset);
+        hb.enableHelpKey(getRootPane(), "alta_mesa", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,6 +132,9 @@ public class AltaMesa extends javax.swing.JDialog {
         jTextFieldCapacidad = new javax.swing.JTextField();
         jButtonAltaMesaAceptar = new javax.swing.JButton();
         validationPanelAltaMesa = new org.netbeans.validation.api.ui.swing.ValidationPanel();
+        jMenuBarAltaMesa = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -131,6 +158,15 @@ public class AltaMesa extends javax.swing.JDialog {
                 jButtonAltaMesaAceptarActionPerformed(evt);
             }
         });
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarAltaMesa.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarAltaMesa);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,7 +216,7 @@ public class AltaMesa extends javax.swing.JDialog {
                 .addComponent(validationPanelAltaMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAltaMesaAceptar)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -264,6 +300,9 @@ public class AltaMesa extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelCapacidad;
     private javax.swing.JLabel jLabelIdentificador;
     private javax.swing.JLabel jLabelLocalizacion;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarAltaMesa;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JTextField jTextFieldCapacidad;
     private javax.swing.JTextField jTextFieldIdentificador;
     private javax.swing.JTextField jTextFieldLocalizacion;

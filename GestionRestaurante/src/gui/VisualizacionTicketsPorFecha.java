@@ -5,8 +5,12 @@ import dto.ProductoTicket;
 import dto.Ticket;
 import gui.tablemodels.TableModelProductosTicket;
 import gui.tablemodels.TableModelTickets;
+import java.io.File;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
@@ -17,7 +21,7 @@ import logica.LogicaNegocio;
  *
  * @author sergio
  */
-public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
+public class VisualizacionTicketsPorFecha extends javax.swing.JDialog {
 
     // TODO: Adaptar a su función (ver ticket)
     private FiltradoTicketFecha filtradoTicketFecha;
@@ -35,7 +39,7 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
      * Creates new form GestionTicket
      */
     // TODO: ¿Necesarias fechaInicioFiltradoTicket y fechaFinFiltradoTicket en constructor?
-    public VisualizacionTicketsFiltradoFecha(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
+    public VisualizacionTicketsPorFecha(java.awt.Dialog parent, boolean modal, LogicaNegocio logicaNegocio) {
         super(parent, modal);
         filtradoTicketFecha = (FiltradoTicketFecha) parent;
         this.logicaNegocio = logicaNegocio;
@@ -43,12 +47,16 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle("FILTRADO TICKETS POR FECHA");
         //logicaNegocio.setCurrentTicket(ticketReapertura);     // Sobra ya que convierte ticketActual a null
-        rellenarTablaTickets();
+        //rellenarTablaTickets();
 
-        // Recogemos numeroTicket e idMesa
-        jLabelHistorialTicketsFecha.setText("Historial tickets entre el " + fechaInicioFiltradoTicket + " y el "+ fechaFinFiltradoTicket);
-        Collections.sort(logicaNegocio.getListaTicketsFiltradoFecha(fechaInicioFiltradoTicket, fechaFinFiltradoTicket));
+        fechaInicioFiltradoTicket = logicaNegocio.getFechaInicioFiltradoTicket();
+        fechaFinFiltradoTicket = logicaNegocio.getFechaFinFiltradoTicket();
+
+        jLabelHistorialTicketsFechaInicio.setText("Fecha Inicio: " + fechaInicioFiltradoTicket);
+        jLabelHistorialTicketsFechaFin.setText("Fecha Fin: " + fechaFinFiltradoTicket);
+        //Collections.sort(logicaNegocio.getListaTicketsFiltradoFecha(fechaInicioFiltradoTicket, fechaFinFiltradoTicket));      // TODO (borrar): No es donde debe ir. Se ordena en LogicaNegocio
         rellenarTablaTickets();
+        ponLaAyuda();
     }
 
     // Utilizando un AbstractTableModel
@@ -56,8 +64,27 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
         TableModelTickets tmt = new TableModelTickets(logicaNegocio.getListaTicketsFiltradoFecha(fechaInicioFiltradoTicket, fechaFinFiltradoTicket));
         jTableTicketsFecha.setModel(tmt);
     }
+
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
+        
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "visualizacion_tickets_fecha", helpset);
+        hb.enableHelpKey(getRootPane(), "visualizacion_tickets_fecha", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }
     
-    // TODO: Debe permitir tener más de un ticket abierto a la vez (pero solo uno por mesa)
+    // TODO (requerido): Debe permitir tener más de un ticket abierto a la vez (pero solo uno por mesa)
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,12 +95,16 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabelVisualizacionTicketFiltradoFecha = new javax.swing.JLabel();
-        jLabelHistorialTicketsFecha = new javax.swing.JLabel();
+        jLabelHistorialTicketsFechaInicio = new javax.swing.JLabel();
+        jLabelHistorialTicketsFechaFin = new javax.swing.JLabel();
         jButtonVisualizacionTicket = new javax.swing.JButton();
         jButtonReaperturaTicket = new javax.swing.JButton();
         jButtonVolverAtras = new javax.swing.JButton();
         jScrollPaneProductosTicket = new javax.swing.JScrollPane();
         jTableTicketsFecha = new javax.swing.JTable();
+        jMenuBarVisualizacionTicketsPorMesa = new javax.swing.JMenuBar();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -82,9 +113,11 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
             }
         });
 
-        jLabelVisualizacionTicketFiltradoFecha.setText("VISUALIZACIÓN TICKETS POR FECHA");
+        jLabelVisualizacionTicketFiltradoFecha.setText("FILTRADO TICKETS POR FECHA");
 
-        jLabelHistorialTicketsFecha.setText("Historial tickets entre fechas");
+        jLabelHistorialTicketsFechaInicio.setText("Fecha Inicio");
+
+        jLabelHistorialTicketsFechaFin.setText("Fecha Fin");
 
         jButtonVisualizacionTicket.setText("Ver ticket");
         jButtonVisualizacionTicket.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +153,15 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
         ));
         jScrollPaneProductosTicket.setViewportView(jTableTicketsFecha);
 
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarVisualizacionTicketsPorMesa.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBarVisualizacionTicketsPorMesa);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,18 +170,18 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
                 .addGap(35, 35, 35)
                 .addComponent(jButtonReaperturaTicket, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelVisualizacionTicketFiltradoFecha)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabelHistorialTicketsFecha, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonVisualizacionTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButtonVolverAtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelHistorialTicketsFechaFin, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneProductosTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelVisualizacionTicketFiltradoFecha, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelHistorialTicketsFechaInicio, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonVisualizacionTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonVolverAtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(66, 66, 66))
         );
         layout.setVerticalGroup(
@@ -147,8 +189,10 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabelVisualizacionTicketFiltradoFecha)
-                .addGap(11, 11, 11)
-                .addComponent(jLabelHistorialTicketsFecha)
+                .addGap(10, 10, 10)
+                .addComponent(jLabelHistorialTicketsFechaInicio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelHistorialTicketsFechaFin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -160,7 +204,7 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonVisualizacionTicket)
                     .addComponent(jButtonVolverAtras))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,8 +234,12 @@ public class VisualizacionTicketsFiltradoFecha extends javax.swing.JDialog {
     private javax.swing.JButton jButtonReaperturaTicket;
     private javax.swing.JButton jButtonVisualizacionTicket;
     private javax.swing.JButton jButtonVolverAtras;
-    private javax.swing.JLabel jLabelHistorialTicketsFecha;
+    private javax.swing.JLabel jLabelHistorialTicketsFechaFin;
+    private javax.swing.JLabel jLabelHistorialTicketsFechaInicio;
     private javax.swing.JLabel jLabelVisualizacionTicketFiltradoFecha;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBarVisualizacionTicketsPorMesa;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JScrollPane jScrollPaneProductosTicket;
     private javax.swing.JTable jTableTicketsFecha;
     // End of variables declaration//GEN-END:variables

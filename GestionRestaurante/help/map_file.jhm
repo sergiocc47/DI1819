@@ -1,0 +1,15 @@
+<map version="1.0">
+   <mapID target="aplicacion" url="html/main.html" />
+   <mapID target="pantalla_principal" url="html/pantalla_principal.html" />
+   <mapID target="apertura_ticket" url="html/apertura_ticket.html" />
+   <mapID target="gestion_mesas" url="html/gestion_mesas.html" />
+   <mapID target="alta_mesa" url="html/alta_mesa.html" />
+   <mapID target="gestion_carta" url="html/gestion_carta.html" />
+   <mapID target="alta_producto_carta" url="html/alta_producto_carta.html" />
+   <mapID target="gestion_productos_ticket" url="html/gestion_productos_ticket.html" />
+   <mapID target="alta_producto_ticket" url="html/alta_producto_ticket.html" />
+   <mapID target="filtrado_ticket_fecha" url="html/filtrado_ticket_fecha.html" />
+   <mapID target="filtrado_ticket_mesa" url="html/filtrado_ticket_mesa.html" />
+   <mapID target="visualizacion_tickets_fecha" url="html/visualizacion_tickets_fecha.html" />
+   <mapID target="visualizacion_tickets_mesa" url="html/visualizacion_tickets_mesa.html" />
+</map>

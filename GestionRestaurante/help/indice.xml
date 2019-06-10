@@ -1,0 +1,15 @@
+<index version="1.0">
+   <indexitem text="Gestión Restaurante" target="aplicacion"/>
+   <indexitem text="Pantalla Principal" target="pantalla_principal"/>
+   <indexitem text="Apertura Ticket" target="apertura_ticket"/>
+   <indexitem text="Gestión Mesas" target="gestion_mesas"/>
+   <indexitem text="Alta Mesa" target="alta_mesa"/>
+   <indexitem text="Gestión Carta" target="gestion_carta"/>
+   <indexitem text="Alta Producto Carta" target="alta_producto_carta"/>
+   <indexitem text="Gestión Productos Ticket" target="gestion_productos_ticket"/>
+   <indexitem text="Alta Producto Ticket" target="alta_producto_ticket"/>
+   <indexitem text="Filtrado Ticket por Fecha" target="filtrado_ticket_fecha"/>
+   <indexitem text="Filtrado Ticket por Mesa" target="filtrado_ticket_mesa"/>
+   <indexitem text="Visualización Tickets por Fecha" target="visualizacion_tickets_fecha"/>
+   <indexitem text="Visualización Tickets por Mesa" target="visualizacion_tickets_mesa"/>
+</index>

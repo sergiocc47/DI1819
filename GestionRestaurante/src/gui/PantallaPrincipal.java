@@ -3,10 +3,14 @@ package gui;
 import dto.Mesa;
 import dto.Ticket;
 import gui.tablemodels.TableModelTickets;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
@@ -58,6 +62,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setTitle("GESTIÓN RESTAURANTE");
         Collections.sort(logicaNegocio.getListaTickets());
         rellenarTablaTickets();
+        ponLaAyuda();
     }
 
     // TODO (fail): Corregir formato fecha
@@ -75,7 +80,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-        */
+         */
     }
 
     public void reabrirTicket() {
@@ -107,7 +112,25 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un ticket de la tabla.", "ADVERTENCIA REAPERTURA TICKET", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void ponLaAyuda() {
+        try {
+        // Carga el fichero de ayuda
+        File fichero = new File("help"+File.separator+"help_set.hs");
+        URL hsURL = fichero.toURI().toURL();
         
+        HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+        HelpBroker hb = helpset.createHelpBroker();
+        
+        // Pone ayuda a item de menu al pulsarlo 
+        // y a F1 en ventana principal.
+        hb.enableHelpOnButton(jMenuItemMostrarAyuda, "pantalla_principal", helpset);
+        hb.enableHelpKey(getRootPane(), "pantalla_principal", helpset);
+        } catch (Exception e) {
+        e.printStackTrace();
         }
     }
 
@@ -141,6 +164,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuFiltrado = new javax.swing.JMenu();
         jMenuItemFiltradoTicketsFecha = new javax.swing.JMenuItem();
         jMenuItemFiltradoTicketsMesa = new javax.swing.JMenuItem();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemMostrarAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -267,6 +292,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuTickets.add(jMenuFiltrado);
 
         jMenuBarPantallaPrincipal.add(jMenuTickets);
+
+        jMenuAyuda.setText("Ayuda");
+
+        jMenuItemMostrarAyuda.setText("Mostrar ayuda");
+        jMenuAyuda.add(jMenuItemMostrarAyuda);
+
+        jMenuBarPantallaPrincipal.add(jMenuAyuda);
 
         setJMenuBar(jMenuBarPantallaPrincipal);
 
@@ -426,6 +458,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVisualizacionTicket;
     private javax.swing.JLabel jLabelGestionRestaurante;
     private javax.swing.JLabel jLabelListaTicket;
+    private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBarPantallaPrincipal;
     private javax.swing.JMenu jMenuCarta;
     private javax.swing.JMenu jMenuFiltrado;
@@ -436,6 +469,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemFiltradoTicketsMesa;
     private javax.swing.JMenuItem jMenuItemGestionCarta;
     private javax.swing.JMenuItem jMenuItemGestionMesas;
+    private javax.swing.JMenuItem jMenuItemMostrarAyuda;
     private javax.swing.JMenu jMenuMesas;
     private javax.swing.JMenu jMenuTickets;
     private javax.swing.JScrollPane jScrollPaneTickets;

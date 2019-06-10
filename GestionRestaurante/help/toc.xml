@@ -1,0 +1,16 @@
+<toc version="1.0">
+   <tocitem text="Gestión Restaurante" target="aplicacion">
+      <tocitem text="Pantalla Principal" target="pantalla_principal"/>
+      <tocitem text="Apertura Ticket" target="apertura_ticket"/>
+      <tocitem text="Gestión Mesas" target="gestion_mesas"/>
+      <tocitem text="Alta Mesa" target="alta_mesa"/>
+      <tocitem text="Gestión Carta" target="gestion_carta"/>
+      <tocitem text="Alta Producto Carta" target="alta_producto_carta"/>
+      <tocitem text="Gestión Productos Ticket" target="gestion_productos_ticket"/>
+      <tocitem text="Alta Producto Ticket" target="alta_producto_ticket"/>
+      <tocitem text="Filtrado Ticket por Fecha" target="filtrado_ticket_fecha"/>
+      <tocitem text="Filtrado Ticket por Mesa" target="filtrado_ticket_mesa"/>
+      <tocitem text="Visualización Tickets por Fecha" target="visualizacion_tickets_fecha"/>
+      <tocitem text="Visualización Tickets por Mesa" target="visualizacion_tickets_mesa"/>
+   </tocitem>
+</toc>
